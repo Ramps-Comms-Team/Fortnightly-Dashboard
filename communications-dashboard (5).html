@@ -1,0 +1,2564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Communications Fortnightly Performance Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+/* ═══════════════════════════════════════════════════════════
+   DESIGN SYSTEM
+   Inspired by the reference: dark sidebar, light content area,
+   white rounded cards, warm amber accent, clean hierarchy.
+═══════════════════════════════════════════════════════════ */
+:root {
+  /* Palette */
+  --sidebar-bg:   #0F1E2D;
+  --sidebar-mid:  #162535;
+  --sidebar-hi:   #1D3045;
+  --navy:         #0F1E2D;
+  --navy-mid:     #1A2E42;
+  --page-bg:      #F0F4F9;
+  --card-bg:      #FFFFFF;
+  --amber:        #E8A020;
+  --amber-soft:   #FFF3DC;
+  --amber-dark:   #B87800;
+  --teal:         #1B7A6E;
+  --teal-soft:    #E0F4F1;
+  --teal-dark:    #0F5248;
+  --coral:        #E05A4B;
+  --coral-soft:   #FDECEA;
+  --blue:         #3B7DD8;
+  --blue-soft:    #EAF1FB;
+  --purple:       #6B5CE7;
+  --purple-soft:  #EEF0FF;
+  --green:        #1E7E4A;
+  --green-soft:   #E6F4ED;
+  --red:          #C0392B;
+  --red-soft:     #FCEAEA;
+  --border:       #E4EBF5;
+  --border-dark:  #C8D6E8;
+  --text-h:       #0D1B2A;
+  --text-p:       #344A60;
+  --text-s:       #6B86A0;
+  --text-m:       #9AAEC4;
+  --shadow-xs:    0 1px 3px rgba(15,30,45,.06);
+  --shadow-sm:    0 2px 8px rgba(15,30,45,.08);
+  --shadow-md:    0 4px 16px rgba(15,30,45,.10);
+  --shadow-lg:    0 8px 32px rgba(15,30,45,.12);
+  --r-sm:         6px;
+  --r-md:         10px;
+  --r-lg:         14px;
+  --r-xl:         18px;
+  --font:         -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --font-display: 'Georgia', 'Times New Roman', serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-p);
+  background: var(--page-bg);
+  min-height: 100vh;
+  display: flex;
+}
+
+/* ─── SIDEBAR ─────────────────────────────────── */
+.sidebar {
+  width: 220px;
+  min-height: 100vh;
+  background: var(--sidebar-bg);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0; top: 0; bottom: 0;
+  z-index: 200;
+  overflow: hidden;
+  transition: width .2s;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 22px 20px 18px;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.sidebar-logo-mark {
+  width: 34px; height: 34px;
+  background: var(--amber);
+  border-radius: var(--r-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; font-weight: 700;
+  color: var(--navy);
+  font-family: var(--font-display);
+  flex-shrink: 0;
+}
+.sidebar-logo-text {
+  font-size: 14px; font-weight: 700;
+  color: #fff;
+  letter-spacing: .01em;
+  line-height: 1.2;
+}
+.sidebar-logo-sub {
+  font-size: 10px;
+  color: rgba(255,255,255,.38);
+  font-weight: 400;
+}
+
+/* Section label in sidebar */
+.sidebar-section-lbl {
+  padding: 16px 20px 6px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: rgba(255,255,255,.28);
+}
+
+/* Nav items */
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 20px;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  width: 100%;
+  text-align: left;
+  color: rgba(255,255,255,.58);
+  font-family: var(--font);
+  font-size: 12.5px;
+  font-weight: 500;
+  border-radius: 0;
+  transition: color .15s, background .15s;
+  position: relative;
+}
+.nav-item:hover { color: rgba(255,255,255,.9); background: rgba(255,255,255,.04); }
+.nav-item.active {
+  color: #fff;
+  background: rgba(255,255,255,.09);
+}
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 4px; bottom: 4px;
+  width: 3px;
+  background: var(--amber);
+  border-radius: 0 3px 3px 0;
+}
+.nav-icon {
+  width: 17px; height: 17px;
+  flex-shrink: 0;
+  opacity: .7;
+}
+.nav-item.active .nav-icon { opacity: 1; }
+.nav-num {
+  margin-left: auto;
+  font-size: 9px;
+  font-weight: 700;
+  background: rgba(255,255,255,.12);
+  color: rgba(255,255,255,.5);
+  padding: 1px 5px;
+  border-radius: 20px;
+  letter-spacing: .04em;
+}
+.nav-item.active .nav-num {
+  background: var(--amber);
+  color: var(--navy);
+}
+
+.sidebar-bottom {
+  margin-top: auto;
+  padding: 16px 20px;
+  border-top: 1px solid rgba(255,255,255,.06);
+}
+.sidebar-file-info {
+  font-size: 10px;
+  color: rgba(255,255,255,.3);
+  line-height: 1.4;
+}
+.sidebar-file-name {
+  font-weight: 600;
+  color: rgba(255,255,255,.5);
+  font-size: 11px;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ─── MAIN CONTENT AREA ───────────────────────── */
+.content-wrap {
+  margin-left: 220px;
+  flex: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── TOP BAR ─────────────────────────────────── */
+.topbar {
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 58px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-xs);
+}
+.topbar-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-h);
+  margin-right: 4px;
+}
+.topbar-period {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  color: var(--text-s);
+}
+.period-badge {
+  background: var(--navy);
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.prev-badge {
+  background: var(--border);
+  color: var(--text-s);
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+}
+.topbar-spacer { flex: 1; }
+
+/* Controls */
+.ctrl-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ctrl-lbl {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--text-m);
+  white-space: nowrap;
+}
+select.tb-sel {
+  font-family: var(--font);
+  font-size: 11.5px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--page-bg);
+  color: var(--text-p);
+  padding: 4px 8px;
+  cursor: pointer;
+  height: 30px;
+  transition: border-color .15s;
+}
+select.tb-sel:focus { outline: none; border-color: var(--amber); }
+select.tb-sel:hover { border-color: var(--border-dark); }
+
+.tb-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font);
+  font-size: 11.5px;
+  font-weight: 600;
+  border-radius: var(--r-sm);
+  border: 1.5px solid transparent;
+  padding: 0 12px;
+  cursor: pointer;
+  height: 30px;
+  transition: all .15s;
+  white-space: nowrap;
+}
+.tb-btn-primary {
+  background: var(--amber);
+  color: var(--navy);
+  border-color: var(--amber);
+}
+.tb-btn-primary:hover { background: #F0AA22; border-color: #F0AA22; }
+.tb-btn-ghost {
+  background: var(--page-bg);
+  color: var(--text-s);
+  border-color: var(--border);
+}
+.tb-btn-ghost:hover { background: var(--border); color: var(--text-p); }
+
+.upload-zone { position: relative; }
+.upload-zone input[type=file] {
+  position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%;
+}
+
+/* Divider */
+.tb-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--border);
+  margin: 0 2px;
+}
+
+/* ─── PAGE BODY ───────────────────────────────── */
+.page-body {
+  flex: 1;
+  padding: 24px 28px 32px;
+}
+
+/* ─── NO DATA STATE ───────────────────────────── */
+.no-data-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+  gap: 24px;
+  text-align: center;
+}
+.no-data-card {
+  background: var(--card-bg);
+  border-radius: var(--r-xl);
+  padding: 52px 48px;
+  box-shadow: var(--shadow-md);
+  max-width: 580px;
+  width: 100%;
+}
+.no-data-icon-ring {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: var(--amber-soft);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px;
+  margin: 0 auto 20px;
+}
+.no-data-h { font-size: 20px; font-weight: 700; color: var(--text-h); margin-bottom: 8px; }
+.no-data-p { font-size: 13px; color: var(--text-s); margin-bottom: 24px; line-height: 1.6; }
+.guide-steps-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  text-align: left;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.guide-step {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.guide-step-num {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.guide-step-text { font-size: 11.5px; color: var(--text-s); line-height: 1.5; }
+
+/* ─── ERROR BANNER ────────────────────────────── */
+.err-banner {
+  background: var(--red-soft);
+  border: 1.5px solid #F5A0A0;
+  border-radius: var(--r-md);
+  padding: 12px 16px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 12.5px;
+  color: #7B1A1A;
+  margin-bottom: 16px;
+}
+
+/* ─── VALIDATION PANEL ────────────────────────── */
+.val-panel {
+  background: var(--card-bg);
+  border-radius: var(--r-lg);
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border);
+}
+.val-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.val-panel-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-h);
+}
+.val-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.val-stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11.5px;
+  color: var(--text-s);
+}
+.val-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.val-sheets-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.val-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-size: 10.5px;
+  font-weight: 500;
+}
+.vc-ok   { background: var(--green-soft); color: var(--green); border: 1px solid #A8D8BC; }
+.vc-skip { background: var(--border); color: var(--text-s); border: 1px solid var(--border-dark); }
+.vc-warn { background: var(--amber-soft); color: var(--amber-dark); border: 1px solid #F0C860; }
+.val-warn-list { font-size: 11.5px; color: var(--amber-dark); }
+.val-warn-item { display: flex; gap: 6px; margin-bottom: 4px; }
+.val-section-lbl {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--text-m);
+  margin-bottom: 7px;
+  margin-top: 12px;
+}
+
+/* ─── BADGES ──────────────────────────────────── */
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.b-green  { background: var(--green-soft);  color: var(--green); }
+.b-red    { background: var(--red-soft);    color: var(--red); }
+.b-amber  { background: var(--amber-soft);  color: var(--amber-dark); }
+.b-gray   { background: var(--border);      color: var(--text-s); }
+.b-navy   { background: var(--navy);        color: #fff; }
+.b-teal   { background: var(--teal-soft);   color: var(--teal-dark); }
+.b-blue   { background: var(--blue-soft);   color: var(--blue); }
+.b-purple { background: var(--purple-soft); color: var(--purple); }
+.brand-pill {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 600;
+  background: var(--border);
+  color: var(--text-s);
+  border: 1px solid var(--border-dark);
+}
+
+/* ─── DELTA ───────────────────────────────────── */
+.delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 6px;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 10px;
+}
+.d-up-good  { background: #D8F2E4; color: #0E6133; }
+.d-dn-bad   { background: var(--red-soft); color: var(--red); }
+.d-up-neu   { background: var(--amber-soft); color: var(--amber-dark); }
+.d-dn-neu   { background: var(--border); color: var(--text-s); }
+.d-neu      { background: var(--border); color: var(--text-s); }
+
+/* ─── TAB CONTENT PANES ───────────────────────── */
+.tab-pane { display: none; }
+.tab-pane.active { display: block; }
+
+/* ─── SECTION HEADING ─────────────────────────── */
+.sec-hdr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  margin-top: 24px;
+}
+.sec-hdr:first-child { margin-top: 0; }
+.sec-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-h);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sec-title-tag {
+  display: inline-flex;
+  width: 4px; height: 16px;
+  border-radius: 2px;
+  background: var(--amber);
+}
+.sec-link {
+  font-size: 11px;
+  color: var(--text-s);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+.sec-link:hover { color: var(--amber-dark); }
+
+/* ─── CARDS & GRIDS ───────────────────────────── */
+.card {
+  background: var(--card-bg);
+  border-radius: var(--r-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.card-p { padding: 20px 22px; }
+.card-sm { padding: 16px 18px; }
+
+/* Grid helpers */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 14px; }
+.grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; }
+.grid-auto-sm { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+@media (max-width: 1100px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 800px) {
+  .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+  .sidebar { width: 60px; }
+  .content-wrap { margin-left: 60px; }
+  .sidebar-logo-text, .sidebar-logo-sub, .nav-item span, .nav-num, .sidebar-section-lbl { display: none; }
+  .nav-item { justify-content: center; padding: 10px; }
+}
+
+/* ─── KPI CARDS ───────────────────────────────── */
+.kpi-card {
+  background: var(--card-bg);
+  border-radius: var(--r-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  padding: 18px 20px;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow .15s, transform .15s;
+}
+.kpi-card:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
+.kpi-accent-bar {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+}
+.kpi-icon-wrap {
+  width: 36px; height: 36px;
+  border-radius: var(--r-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+.kpi-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-s);
+  margin-bottom: 5px;
+}
+.kpi-value {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--text-h);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  margin-bottom: 8px;
+  letter-spacing: -.01em;
+}
+.kpi-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.kpi-prev-lbl { font-size: 10.5px; color: var(--text-m); }
+
+/* ─── HERO BANNER (Exec Overview) ────────────── */
+.exec-hero {
+  background: linear-gradient(135deg, var(--navy) 0%, #1D3A52 100%);
+  border-radius: var(--r-xl);
+  padding: 26px 28px;
+  margin-bottom: 20px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.exec-hero::after {
+  content: '';
+  position: absolute;
+  right: -40px; top: -60px;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  background: rgba(232,160,32,.10);
+  pointer-events: none;
+}
+.exec-hero::before {
+  content: '';
+  position: absolute;
+  right: 60px; bottom: -80px;
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  background: rgba(27,122,110,.12);
+  pointer-events: none;
+}
+.exec-hero-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+.exec-hero-title {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.exec-hero-period { font-size: 11.5px; color: rgba(255,255,255,.55); }
+.exec-hero-badges { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.hero-badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 10.5px;
+  font-weight: 600;
+  background: rgba(255,255,255,.12);
+  color: rgba(255,255,255,.85);
+  border: 1px solid rgba(255,255,255,.15);
+}
+.hero-badge-amber { background: var(--amber); color: var(--navy); border-color: var(--amber); }
+
+/* Exec summary columns */
+.exec-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+@media (max-width: 900px) { .exec-cols { grid-template-columns: 1fr; } }
+.exec-col-title {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--amber);
+  margin-bottom: 10px;
+}
+.exec-item {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 11.5px;
+  color: rgba(255,255,255,.72);
+  line-height: 1.45;
+}
+.exec-bullet {
+  flex-shrink: 0;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  margin-top: 5px;
+}
+.bull-green { background: #4ADE80; }
+.bull-amber { background: var(--amber); }
+.bull-red   { background: #F87171; }
+
+/* ─── ATTENTION PANEL ─────────────────────────── */
+.attn-panel {
+  background: #FFFBF0;
+  border: 1.5px solid #F5C842;
+  border-radius: var(--r-lg);
+  padding: 16px 20px;
+  margin-bottom: 20px;
+}
+.attn-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--amber-dark);
+  margin-bottom: 10px;
+}
+.attn-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.attn-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff;
+  border: 1px solid #F0D060;
+  border-radius: var(--r-sm);
+  padding: 5px 10px;
+  font-size: 11.5px;
+  color: #7A4F00;
+}
+
+/* ─── CHART CARD ──────────────────────────────── */
+.chart-card {
+  background: var(--card-bg);
+  border-radius: var(--r-lg);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  padding: 18px 20px;
+}
+.chart-card-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--text-s);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.chart-h { position: relative; }
+.chart-h-200 { height: 200px; }
+.chart-h-220 { height: 220px; }
+.chart-h-260 { height: 260px; }
+
+/* ─── MINI DATA TABLE ─────────────────────────── */
+.tbl-wrap { overflow-x: auto; }
+table.data-tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+table.data-tbl th {
+  background: var(--page-bg);
+  padding: 9px 12px;
+  text-align: left;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--text-s);
+  border-bottom: 2px solid var(--border);
+  white-space: nowrap;
+}
+table.data-tbl th.sortable { cursor: pointer; }
+table.data-tbl th.sortable:hover { color: var(--text-h); }
+table.data-tbl td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-p);
+  vertical-align: middle;
+}
+table.data-tbl tr:last-child td { border-bottom: none; }
+table.data-tbl tbody tr:hover td { background: #F8FAFD; }
+.td-note {
+  font-size: 11px;
+  color: var(--text-s);
+  font-style: italic;
+  max-width: 220px;
+}
+
+/* ─── NOTES PANEL ─────────────────────────────── */
+.notes-card {
+  background: var(--page-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 14px 16px;
+  margin-top: 16px;
+}
+.notes-card-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-m);
+  margin-bottom: 10px;
+}
+.note-item { margin-bottom: 10px; }
+.note-item:last-child { margin-bottom: 0; }
+.note-brand-lbl {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--amber-dark);
+  margin-bottom: 3px;
+}
+.note-body { font-size: 12px; color: var(--text-p); line-height: 1.5; }
+
+/* ─── SECTION TABS (within a detail tab) ─────── */
+.inner-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 18px;
+}
+.inner-tab {
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-s);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color .15s;
+}
+.inner-tab.active { color: var(--amber-dark); border-bottom-color: var(--amber); }
+.inner-tab:hover:not(.active) { color: var(--text-p); }
+
+/* ─── OPS TABLE CONTROLS ──────────────────────── */
+.tbl-ctrl-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+.search-box {
+  font-family: var(--font);
+  font-size: 12px;
+  padding: 7px 12px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--card-bg);
+  color: var(--text-p);
+  flex: 1;
+  min-width: 180px;
+}
+.search-box:focus { outline: none; border-color: var(--amber); }
+select.tbl-filter {
+  font-family: var(--font);
+  font-size: 12px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-sm);
+  background: var(--card-bg);
+  color: var(--text-p);
+  padding: 6px 10px;
+  cursor: pointer;
+  height: 34px;
+}
+select.tbl-filter:focus { outline: none; border-color: var(--amber); }
+
+/* ─── EMPTY STATE ─────────────────────────────── */
+.empty-state {
+  text-align: center;
+  padding: 36px 20px;
+  color: var(--text-m);
+  font-size: 13px;
+}
+.empty-icon {
+  font-size: 28px;
+  margin-bottom: 10px;
+  opacity: .4;
+}
+.empty-msg { font-weight: 500; color: var(--text-s); }
+.empty-sub { font-size: 11.5px; margin-top: 4px; }
+
+/* ─── RISK INDICATOR ──────────────────────────── */
+.risk-indicator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: var(--r-md);
+  margin-bottom: 14px;
+}
+.risk-ok   { background: var(--green-soft);  border: 1px solid #A8D8BC; }
+.risk-warn { background: var(--red-soft);     border: 1px solid #F5A0A0; }
+.risk-na   { background: var(--border);       border: 1px solid var(--border-dark); }
+.risk-label { font-size: 12px; font-weight: 600; }
+.risk-ok .risk-label   { color: var(--green); }
+.risk-warn .risk-label { color: var(--red); }
+
+/* ─── VENDOR STATUS ───────────────────────────── */
+.vendor-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.vendor-card {
+  flex: 1;
+  min-width: 120px;
+  background: var(--page-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 12px 14px;
+}
+.vendor-card.outstanding { border-color: #F0D060; background: var(--amber-soft); }
+.vendor-card-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--text-m); margin-bottom: 5px; }
+.vendor-card-value { font-size: 22px; font-weight: 800; color: var(--text-h); }
+
+/* ─── SENTIMENT DISPLAY ───────────────────────── */
+.sentiment-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 10px;
+}
+.sentiment-item {
+  background: var(--page-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 10px 12px;
+}
+.sentiment-brand { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--text-m); margin-bottom: 4px; }
+.sentiment-val { font-size: 12px; color: var(--text-p); font-weight: 500; }
+
+/* ─── PRINT STYLES ────────────────────────────── */
+@media print {
+  body { background: #fff; display: block; }
+  .sidebar { display: none !important; }
+  .content-wrap { margin-left: 0; }
+  .topbar { position: static; box-shadow: none; border-bottom: 2px solid var(--border); }
+  .upload-zone, .tb-btn, .tbl-ctrl-row, select.tb-sel,
+  #errorBanner, .val-panel { display: none !important; }
+  .tab-pane { display: block !important; }
+  .kpi-card:hover { box-shadow: var(--shadow-sm); transform: none; }
+  .chart-h-200 { height: 160px; }
+  .chart-h-220 { height: 180px; }
+  .chart-h-260 { height: 200px; }
+  .page-body { padding: 12px; }
+  .card { break-inside: avoid; }
+  .kpi-card { break-inside: avoid; }
+  .exec-hero { background: var(--navy) !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     SIDEBAR
+══════════════════════════════════════════ -->
+<nav class="sidebar" aria-label="Dashboard navigation">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-mark">C</div>
+    <div>
+      <div class="sidebar-logo-text">CommsDB</div>
+      <div class="sidebar-logo-sub">Fortnightly Report</div>
+    </div>
+  </div>
+
+  <div class="sidebar-section-lbl">Overview</div>
+  <button class="nav-item active" onclick="switchTab('overview',this)" data-tab="overview">
+    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+    <span>Executive Overview</span>
+    <span class="nav-num">01</span>
+  </button>
+
+  <div class="sidebar-section-lbl">Reporting Sections</div>
+  <button class="nav-item" onclick="switchTab('pipeline',this)" data-tab="pipeline">
+    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h12M3 18h8"/><circle cx="20" cy="18" r="2"/><path d="M18 16l-2-2m4 0l-2 2"/></svg>
+    <span>Pipeline Impact</span>
+    <span class="nav-num">02</span>
+  </button>
+  <button class="nav-item" onclick="switchTab('market',this)" data-tab="market">
+    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+    <span>Market Growth</span>
+    <span class="nav-num">03</span>
+  </button>
+  <button class="nav-item" onclick="switchTab('reputation',this)" data-tab="reputation">
+    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    <span>Reputation &amp; Risk</span>
+    <span class="nav-num">04</span>
+  </button>
+  <button class="nav-item" onclick="switchTab('eventsTT',this)" data-tab="eventsTT">
+    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><circle cx="8" cy="15" r="1" fill="currentColor"/></svg>
+    <span>Events – Trinidad</span>
+    <span class="nav-num">05</span>
+  </button>
+  <button class="nav-item" onclick="switchTab('eventsGY',this)" data-tab="eventsGY">
+    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><circle cx="16" cy="15" r="1" fill="currentColor"/></svg>
+    <span>Events – Guyana</span>
+    <span class="nav-num">06</span>
+  </button>
+  <button class="nav-item" onclick="switchTab('creative',this)" data-tab="creative">
+    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+    <span>Creative &amp; Visual</span>
+    <span class="nav-num">07</span>
+  </button>
+  <button class="nav-item" onclick="switchTab('sponsorships',this)" data-tab="sponsorships">
+    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    <span>Sponsorships</span>
+    <span class="nav-num">08</span>
+  </button>
+  <button class="nav-item" onclick="switchTab('internal',this)" data-tab="internal">
+    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+    <span>Internal Engagements</span>
+    <span class="nav-num">09</span>
+  </button>
+
+  <div class="sidebar-section-lbl">Data</div>
+  <button class="nav-item" onclick="switchTab('datatable',this)" data-tab="datatable">
+    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>
+    <span>Detailed Data Table</span>
+    <span class="nav-num">10</span>
+  </button>
+  <button class="nav-item" onclick="switchTab('manage',this)" data-tab="manage">
+    <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/><path d="M15.54 8.46a5 5 0 010 7.07M8.46 8.46a5 5 0 000 7.07"/></svg>
+    <span>Manage Periods</span>
+    <span class="nav-num" id="managePeriodCount">0</span>
+  </button>
+
+  <div class="sidebar-bottom" id="sidebarBottom">
+    <div class="sidebar-file-name" id="sidebarStorageCount" style="color:rgba(255,255,255,.45);font-size:10px">No periods stored</div>
+    <div class="sidebar-file-info" id="sidebarFileInfo" style="font-size:10px;color:rgba(255,255,255,.28);margin-top:2px"></div>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     CONTENT WRAP
+══════════════════════════════════════════ -->
+<div class="content-wrap">
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <div class="topbar-title" id="topbarTitle">Dashboard</div>
+    <div class="topbar-period" id="topbarPeriod" style="display:none">
+      <span style="color:var(--text-m);font-size:11px">Period</span>
+      <span class="period-badge" id="topPeriodBadge">—</span>
+      <span style="color:var(--text-m);font-size:11px">vs</span>
+      <span class="prev-badge" id="topPrevBadge">—</span>
+    </div>
+
+    <div class="topbar-spacer"></div>
+
+    <!-- Filters (hidden until workbook loaded) -->
+    <div id="topFilters" style="display:none;align-items:center;gap:8px;display:none">
+      <div class="ctrl-group">
+        <span class="ctrl-lbl">Period</span>
+        <select class="tb-sel" id="periodSel" aria-label="Select reporting period"></select>
+      </div>
+      <div class="tb-divider"></div>
+      <div class="ctrl-group">
+        <span class="ctrl-lbl">Brand</span>
+        <select class="tb-sel" id="brandSel" aria-label="Filter by brand">
+          <option value="all">All Brands</option>
+        </select>
+      </div>
+      <div class="tb-divider"></div>
+      <button class="tb-btn tb-btn-ghost" onclick="resetFilters()" id="resetBtn" style="display:none">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 12a9 9 0 109-9M3 12V6m0 6H9"/></svg>
+        Reset
+      </button>
+    </div>
+
+    <div class="tb-divider"></div>
+    <button class="tb-btn tb-btn-ghost" onclick="window.print()" title="Print or save as PDF">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      Print
+    </button>
+    <div class="upload-zone">
+      <button class="tb-btn tb-btn-primary">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        Upload Workbook
+      </button>
+      <input type="file" accept=".xlsx,.xls" id="fileInput" aria-label="Select Excel workbook">
+    </div>
+  </header>
+
+  <!-- PAGE BODY -->
+  <div class="page-body">
+
+    <!-- Error banner -->
+    <div id="errorBanner" style="display:none"></div>
+
+    <!-- ─── NO DATA STATE ─── -->
+    <div id="noDataState">
+      <div class="no-data-screen">
+        <div class="no-data-card">
+          <div class="no-data-icon-ring">📊</div>
+          <div class="no-data-h">No Workbook Loaded</div>
+          <div class="no-data-p">Upload your Communications Fortnightly Report Excel workbook to populate this dashboard. All processing is done locally in your browser — no data is sent to any server.</div>
+          <div class="upload-zone" style="display:inline-block">
+            <button class="tb-btn tb-btn-primary" style="height:38px;font-size:13px;padding:0 20px">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              Upload Workbook to Begin
+            </button>
+            <input type="file" accept=".xlsx,.xls" id="fileInput2" aria-label="Select Excel workbook">
+          </div>
+          <div class="guide-steps-grid">
+            <div class="guide-step"><div class="guide-step-num">1</div><div class="guide-step-text">Click <strong>Upload Workbook</strong> and select your Communications Fortnightly Report (.xlsx)</div></div>
+            <div class="guide-step"><div class="guide-step-num">2</div><div class="guide-step-text">Periods are detected automatically, sorted chronologically, and the latest selected by default</div></div>
+            <div class="guide-step"><div class="guide-step-num">3</div><div class="guide-step-text">Navigate sections using the left sidebar. Filter by period, brand, or territory at the top</div></div>
+            <div class="guide-step"><div class="guide-step-num">4</div><div class="guide-step-text">Every two weeks, upload the updated workbook — all charts rebuild automatically</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── DASHBOARD CONTENT ─── -->
+    <div id="dashContent" style="display:none">
+
+      <!-- Validation panel -->
+      <div class="val-panel" id="valPanel">
+        <div class="val-panel-header">
+          <span style="font-size:16px">📋</span>
+          <span class="val-panel-title">Data Validation &amp; Quality Report</span>
+          <span class="badge b-gray" id="valStatusBadge" style="margin-left:8px"></span>
+          <button class="tb-btn tb-btn-ghost" style="margin-left:auto;height:26px;font-size:11px" onclick="document.getElementById('valPanel').style.display='none'">Dismiss ×</button>
+        </div>
+        <div id="valContent"></div>
+      </div>
+
+      <!-- ══════════ TAB 01 — EXECUTIVE OVERVIEW ══════════ -->
+      <div class="tab-pane active" id="tab-overview">
+
+        <!-- Hero -->
+        <div class="exec-hero" id="execHero">
+          <div class="exec-hero-top">
+            <div>
+              <div class="exec-hero-title">Executive Overview</div>
+              <div class="exec-hero-period" id="execHeroPeriod">Loading…</div>
+            </div>
+            <div class="exec-hero-badges" id="execHeroBadges"></div>
+          </div>
+          <div class="exec-cols" id="execCols"></div>
+        </div>
+
+        <!-- Attention items -->
+        <div class="attn-panel" id="attnPanel" style="display:none">
+          <div class="attn-header">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            Items Requiring Attention
+          </div>
+          <div class="attn-items" id="attnItems"></div>
+        </div>
+
+        <!-- KPI row -->
+        <div class="sec-hdr">
+          <div class="sec-title"><span class="sec-title-tag"></span>Key Performance Indicators</div>
+          <div class="sec-link" id="kpiPeriodInfo"></div>
+        </div>
+        <div class="grid-auto" id="kpiGrid" style="margin-bottom:22px"></div>
+
+        <!-- Trend charts row -->
+        <div class="sec-hdr"><div class="sec-title"><span class="sec-title-tag"></span>Six-Period Trends</div></div>
+        <div class="grid-3" id="trendsGrid" style="margin-bottom:22px"></div>
+
+        <!-- Brand performance + Budget chart -->
+        <div class="grid-2" style="margin-bottom:22px" id="overviewCharts2">
+          <div class="chart-card">
+            <div class="chart-card-title">Leads by Brand — Current Period</div>
+            <div class="chart-h chart-h-220"><canvas id="ch-ov-brands"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-card-title">Events Budget vs Actual (TT + GY)</div>
+            <div class="chart-h chart-h-220"><canvas id="ch-ov-budget"></canvas></div>
+          </div>
+        </div>
+
+      </div><!-- /tab-overview -->
+
+      <!-- ══════════ TAB 02 — PIPELINE ══════════ -->
+      <div class="tab-pane" id="tab-pipeline">
+        <div class="sec-hdr"><div class="sec-title"><span class="sec-title-tag"></span>Pipeline Impact</div></div>
+        <div class="grid-auto-sm" id="kpi-pipeline" style="margin-bottom:18px"></div>
+        <div class="grid-2" style="margin-bottom:16px">
+          <div class="chart-card">
+            <div class="chart-card-title">Leads Generated by Brand</div>
+            <div class="chart-h chart-h-220"><canvas id="ch-pl-leads"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-card-title">Ad Spend by Brand</div>
+            <div class="chart-h chart-h-220"><canvas id="ch-pl-spend"></canvas></div>
+          </div>
+        </div>
+        <div class="card card-p"><div id="tbl-pipeline"></div></div>
+        <div id="notes-pipeline"></div>
+      </div>
+
+      <!-- ══════════ TAB 03 — MARKET ══════════ -->
+      <div class="tab-pane" id="tab-market">
+        <div class="sec-hdr"><div class="sec-title"><span class="sec-title-tag"></span>Market Growth and Visibility</div></div>
+        <div class="grid-auto-sm" id="kpi-market" style="margin-bottom:18px"></div>
+        <div class="grid-2" style="margin-bottom:16px">
+          <div class="chart-card">
+            <div class="chart-card-title">Follower Growth by Brand</div>
+            <div class="chart-h chart-h-220"><canvas id="ch-mkt-foll"></canvas></div>
+          </div>
+          <div class="chart-card">
+            <div class="chart-card-title">Engagement Rate % by Brand</div>
+            <div class="chart-h chart-h-220"><canvas id="ch-mkt-eng"></canvas></div>
+          </div>
+        </div>
+        <div class="card card-p"><div id="tbl-market"></div></div>
+        <div id="notes-market"></div>
+      </div>
+
+      <!-- ══════════ TAB 04 — REPUTATION ══════════ -->
+      <div class="tab-pane" id="tab-reputation">
+        <div class="sec-hdr"><div class="sec-title"><span class="sec-title-tag"></span>Reputation and Risk</div></div>
+        <div id="reputation-content"></div>
+      </div>
+
+      <!-- ══════════ TAB 05 — EVENTS TT ══════════ -->
+      <div class="tab-pane" id="tab-eventsTT">
+        <div class="sec-hdr"><div class="sec-title"><span class="sec-title-tag"></span>Events ROI – Trinidad</div></div>
+        <div id="content-eventsTT"><div class="empty-state"><div class="empty-icon">📅</div><div class="empty-msg">No data available.</div></div></div>
+      </div>
+
+      <!-- ══════════ TAB 06 — EVENTS GY ══════════ -->
+      <div class="tab-pane" id="tab-eventsGY">
+        <div class="sec-hdr"><div class="sec-title"><span class="sec-title-tag"></span>Events ROI – Guyana</div></div>
+        <div id="content-eventsGY"><div class="empty-state"><div class="empty-icon">📅</div><div class="empty-msg">No data available.</div></div></div>
+      </div>
+
+      <!-- ══════════ TAB 07 — CREATIVE ══════════ -->
+      <div class="tab-pane" id="tab-creative">
+        <div class="sec-hdr"><div class="sec-title"><span class="sec-title-tag"></span>Creative and Visual Media</div></div>
+        <div class="grid-auto-sm" id="kpi-creative" style="margin-bottom:18px"></div>
+        <div class="grid-2" style="margin-bottom:16px">
+          <div class="chart-card">
+            <div class="chart-card-title">Creative Output by Type</div>
+            <div class="chart-h chart-h-220"><canvas id="ch-cr-out"></canvas></div>
+          </div>
+          <div id="creative-value-panel"></div>
+        </div>
+        <div class="card card-p"><div id="tbl-creative"></div></div>
+        <div id="notes-creative"></div>
+      </div>
+
+      <!-- ══════════ TAB 08 — SPONSORSHIPS ══════════ -->
+      <div class="tab-pane" id="tab-sponsorships">
+        <div class="sec-hdr"><div class="sec-title"><span class="sec-title-tag"></span>Sponsorships</div></div>
+        <div id="content-sponsorships"><div class="empty-state"><div class="empty-icon">⭐</div><div class="empty-msg">No Sponsorships data yet.</div><div class="empty-sub">This section will populate when data is added to the workbook.</div></div></div>
+      </div>
+
+      <!-- ══════════ TAB 09 — INTERNAL ══════════ -->
+      <div class="tab-pane" id="tab-internal">
+        <div class="sec-hdr"><div class="sec-title"><span class="sec-title-tag"></span>Internal Engagements</div></div>
+        <div id="content-internal"><div class="empty-state"><div class="empty-icon">👥</div><div class="empty-msg">No Internal Engagements data yet.</div><div class="empty-sub">This section will populate when data is added to the workbook.</div></div></div>
+      </div>
+
+      <!-- ══════════ TAB 10 — DATA TABLE ══════════ -->
+      <div class="tab-pane" id="tab-datatable">
+        <div class="sec-hdr"><div class="sec-title"><span class="sec-title-tag"></span>Communications Team — Full Performance Table</div></div>
+        <div class="card card-p">
+          <div class="tbl-ctrl-row">
+            <input type="text" class="search-box" id="opsSearch" placeholder="Search metric, brand, category…" oninput="filterOps()">
+            <select class="tbl-filter" id="opsCatFil" onchange="filterOps()"><option value="">All Categories</option></select>
+            <select class="tbl-filter" id="opsBrandFil" onchange="filterOps()"><option value="">All Brands</option></select>
+          </div>
+          <div class="tbl-wrap">
+            <table class="data-tbl">
+              <thead><tr>
+                <th class="sortable" onclick="sortOps(0)">Category ↕</th>
+                <th class="sortable" onclick="sortOps(1)">Metric ↕</th>
+                <th class="sortable" onclick="sortOps(2)">Brand ↕</th>
+                <th class="sortable" onclick="sortOps(3)">Current ↕</th>
+                <th class="sortable" onclick="sortOps(4)">Previous ↕</th>
+                <th class="sortable" onclick="sortOps(5)">Change ↕</th>
+                <th>Status</th>
+                <th>Notes</th>
+              </tr></thead>
+              <tbody id="opsTbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- ══════════ TAB: MANAGE PERIODS ══════════ -->
+      <div class="tab-pane" id="tab-manage">
+        <div class="sec-hdr"><div class="sec-title"><span class="sec-title-tag"></span>Manage Reporting Periods</div></div>
+        <div class="card card-p" style="margin-bottom:18px">
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+            <div style="flex:1">
+              <div style="font-size:13px;font-weight:700;color:var(--text-h)" id="mgmt-summary">Loading…</div>
+              <div style="font-size:11.5px;color:var(--text-s);margin-top:2px" id="mgmt-subsummary"></div>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <label style="position:relative;cursor:pointer;height:32px;display:inline-flex;align-items:center;gap:5px;padding:0 14px;font-size:12px;font-weight:600;border-radius:6px;background:var(--amber);color:var(--navy);border:1.5px solid var(--amber)">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                Upload &amp; Add Period
+                <input type="file" accept=".xlsx,.xls" id="mgmtFileInput" style="position:absolute;inset:0;opacity:0;cursor:pointer">
+              </label>
+              <button class="tb-btn tb-btn-ghost" onclick="exportData()" style="height:32px;font-size:12px">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Export Backup
+              </button>
+              <label style="position:relative;cursor:pointer;height:32px;display:inline-flex;align-items:center;gap:5px;padding:0 12px;border:1.5px solid var(--border);border-radius:6px;background:var(--page-bg);color:var(--text-s);font-size:12px;font-weight:500">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                Import Backup
+                <input type="file" accept=".json" id="importFileInput" style="position:absolute;inset:0;opacity:0;cursor:pointer">
+              </label>
+              <button class="tb-btn" onclick="confirmClearAll()" style="height:32px;font-size:12px;background:var(--red-soft);color:var(--red);border-color:#F5A0A0">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+                Clear All Data
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="card card-p" id="mgmt-table-wrap">
+          <div class="empty-state" id="mgmt-empty">
+            <div class="empty-icon">📂</div>
+            <div class="empty-msg">No reporting periods stored yet.</div>
+            <div class="empty-sub">Upload an Excel workbook to get started.</div>
+          </div>
+          <div id="mgmt-table" style="display:none">
+            <table class="data-tbl" style="font-size:12px">
+              <thead><tr>
+                <th>Reporting Period</th><th>Source Workbook</th><th>Uploaded</th>
+                <th>Metrics</th><th>Numeric Values</th><th>Actions</th>
+              </tr></thead>
+              <tbody id="mgmt-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /dashContent -->
+  </div><!-- /page-body -->
+</div><!-- /content-wrap -->
+
+<!-- ══ DUPLICATE CONFIRMATION MODAL ══ -->
+<div id="dupModal" style="display:none;position:fixed;inset:0;background:rgba(15,30,45,.55);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:14px;padding:28px;max-width:460px;width:90%;box-shadow:0 8px 40px rgba(15,30,45,.2)">
+    <div style="font-size:16px;font-weight:700;color:var(--text-h);margin-bottom:8px" id="dupModalTitle">Duplicate Period Detected</div>
+    <div style="font-size:13px;color:var(--text-s);margin-bottom:20px;line-height:1.6;white-space:pre-line" id="dupModalBody"></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="tb-btn tb-btn-primary" style="height:36px;font-size:13px" id="dupReplaceBtn">Replace this period</button>
+      <button class="tb-btn tb-btn-ghost" style="height:36px;font-size:13px" id="dupSkipBtn">Keep existing</button>
+      <button class="tb-btn tb-btn-ghost" style="height:36px;font-size:13px" id="dupCancelBtn">Cancel upload</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ GENERAL CONFIRM MODAL ══ -->
+<div id="confirmModal" style="display:none;position:fixed;inset:0;background:rgba(15,30,45,.55);z-index:9999;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:14px;padding:28px;max-width:400px;width:90%;box-shadow:0 8px 40px rgba(15,30,45,.2)">
+    <div style="font-size:16px;font-weight:700;color:var(--text-h);margin-bottom:8px" id="confirmTitle"></div>
+    <div style="font-size:13px;color:var(--text-s);margin-bottom:20px;line-height:1.5" id="confirmBody"></div>
+    <div style="display:flex;gap:10px">
+      <button class="tb-btn" id="confirmOkBtn" style="height:36px;font-size:13px;background:var(--red);color:#fff;border-color:var(--red)">Confirm</button>
+      <button class="tb-btn tb-btn-ghost" onclick="closeConfirmModal()" style="height:36px;font-size:13px">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TOAST ══ -->
+<div id="toast" style="position:fixed;bottom:24px;right:24px;background:var(--navy);color:#fff;padding:12px 18px;border-radius:10px;font-size:12.5px;font-weight:500;box-shadow:0 4px 16px rgba(15,30,45,.2);z-index:9998;display:none;max-width:340px;line-height:1.4"></div>
+
+
+<script>
+'use strict';
+
+/* ════════════════════════════════════════════════
+   TAB NAVIGATION
+════════════════════════════════════════════════ */
+let _activeTab = 'overview';
+
+function switchTab(tabId, btn) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const pane = document.getElementById('tab-' + tabId);
+  if (pane) pane.classList.add('active');
+  if (btn) btn.classList.add('active');
+  _activeTab = tabId;
+  window.scrollTo(0, 0);
+  const titles = {
+    overview: 'Executive Overview', pipeline: 'Pipeline Impact',
+    market: 'Market Growth & Visibility', reputation: 'Reputation & Risk',
+    eventsTT: 'Events ROI \u2013 Trinidad', eventsGY: 'Events ROI \u2013 Guyana',
+    creative: 'Creative & Visual Media',
+    sponsorships: 'Sponsorships', internal: 'Internal Engagements',
+    datatable: 'Detailed Data Table', manage: 'Manage Reporting Periods',
+  };
+  document.getElementById('topbarTitle').textContent = titles[tabId] || 'Dashboard';
+  if (tabId === 'manage') renderManageTab();
+}
+
+/* ════════════════════════════════════════════════
+   INDEXEDDB — persistent, browser-local, never transmitted
+   DB: CommsDashDB  |  Store: periods
+   Record schema: { id: periodName, parsed: sheetData, meta: {...} }
+════════════════════════════════════════════════ */
+const DB_NAME = 'CommsDashDB';
+const DB_VER  = 1;
+const STORE   = 'periods';
+let _db = null;
+
+function openDB() {
+  return new Promise((res, rej) => {
+    if (_db) { res(_db); return; }
+    const req = indexedDB.open(DB_NAME, DB_VER);
+    req.onupgradeneeded = e => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains(STORE)) db.createObjectStore(STORE, { keyPath: 'id' });
+    };
+    req.onsuccess = e => { _db = e.target.result; res(_db); };
+    req.onerror   = e => rej(e.target.error);
+  });
+}
+async function dbGetAll() {
+  const db = await openDB();
+  return new Promise((res, rej) => { const r = db.transaction(STORE,'readonly').objectStore(STORE).getAll(); r.onsuccess = e => res(e.target.result||[]); r.onerror = e => rej(e.target.error); });
+}
+async function dbPut(rec) {
+  const db = await openDB();
+  return new Promise((res, rej) => { const r = db.transaction(STORE,'readwrite').objectStore(STORE).put(rec); r.onsuccess = () => res(); r.onerror = e => rej(e.target.error); });
+}
+async function dbDelete(id) {
+  const db = await openDB();
+  return new Promise((res, rej) => { const r = db.transaction(STORE,'readwrite').objectStore(STORE).delete(id); r.onsuccess = () => res(); r.onerror = e => rej(e.target.error); });
+}
+async function dbClear() {
+  const db = await openDB();
+  return new Promise((res, rej) => { const r = db.transaction(STORE,'readwrite').objectStore(STORE).clear(); r.onsuccess = () => res(); r.onerror = e => rej(e.target.error); });
+}
+
+/* ════════════════════════════════════════════════
+   IN-MEMORY STATE
+════════════════════════════════════════════════ */
+let S = {
+  sheets:{},   // { periodName: parsedSheetObj }
+  periods:[],  // chronologically sorted
+  meta:{},     // { periodName: { filename, uploadTime, metrics, numerics, narratives } }
+  sel:'', prev:'', brand:'all', validation:{}, charts:{},
+};
+
+/* ════════════════════════════════════════════════
+   ALIAS / NORMALISATION TABLES
+════════════════════════════════════════════════ */
+const CAT_ALIAS = {
+  'pipeline impact':'pipeline impact','pipeline':'pipeline impact',
+  'market growth':'market growth and visibility',
+  'market growth and visibility':'market growth and visibility',
+  'brand growth and visibility':'market growth and visibility',
+  'brand growth':'market growth and visibility',
+  'reputation & risk':'reputation and risk','reputation and risk':'reputation and risk',
+  'reputation':'reputation and risk',
+  'events roi (tt)':'events roi tt','events roi (trinidad)':'events roi tt',
+  'events roi \u2013 trinidad':'events roi tt','events roi':'events roi tt',
+  'events roi (gy)':'events roi gy','events roi (guyana)':'events roi gy',
+  'events roi \u2013 guyana':'events roi gy',
+  'creative roi':'creative and visual media',
+  'creative and visual media':'creative and visual media',
+  'visual media impact':'creative and visual media',
+  'business development support':'business development support',
+  'business development':'business development support',
+  'bd support':'business development support',
+  'sponsorships':'sponsorships','csr support':'sponsorships',
+  'csr':'sponsorships','csr impact':'sponsorships',
+  'internal engagements':'internal engagements','internal':'internal engagements',
+};
+const MET_ALIAS = {
+  'campaigns launched':'campaigns launched','leads generated':'leads generated',
+  'engagements generated':'leads generated',
+  'conversion rate (%)':'conversion rate','conversion rate':'conversion rate',
+  'total ad spend':'total ad spend','ad spend':'total ad spend',
+  'cost per click':'cost per click','cost per lead':'cost per lead',
+  'pipeline revenue influenced':'pipeline revenue influenced',
+  'follower growth':'follower growth','followers gained':'follower growth',
+  'engagement rate (%)':'engagement rate','engagement rate':'engagement rate',
+  'thought leadership published':'thought leadership published',
+  'thought leadership':'thought leadership published',
+  'media mentions':'media mentions','speaking engagements':'speaking engagements',
+  'strategic partnerships':'strategic partnerships',
+  'crisis incidents managed':'crisis incidents managed',
+  'severity (low/medium/high)':'severity','severity':'severity',
+  'response time (hrs)':'response time hrs','response time':'response time hrs',
+  'sentiment score (% pos/neg)':'sentiment score','sentiment score':'sentiment score',
+  'negative mentions mitigated':'negative mentions mitigated',
+  'holding statement issued (y/n)':'holding statement issued',
+  'holding statement issued':'holding statement issued',
+  'executive panels/features':'executive panels features',
+  'executive panels':'executive panels features',
+  'compliance comms issued':'compliance comms issued',
+  'events in progress':'events in progress',
+  'events executed':'events executed','events executes':'events executed',
+  'budget allocated':'budget allocated','actual spend':'actual spend',
+  'budget variance %':'budget variance','budget variance':'budget variance',
+  'revenue influenced':'revenue influenced','profit influenced':'profit influenced',
+  'vendors owed':'vendors owed','vendors paid':'vendors paid',
+  '# of attendees budgeted':'attendees budgeted','attendees budgeted':'attendees budgeted',
+  '# of attendeed actual':'attendees actual','# of attendees actual':'attendees actual',
+  'attendees actual':'attendees actual',
+  'avg. feedback score (1-5)':'avg feedback score',
+  'avg feedback score (1-5)':'avg feedback score','avg feedback score':'avg feedback score',
+  'videos released':'videos released',
+  'content - internal use':'content internal use',
+  'content \u2013 internal use':'content internal use','content internal use':'content internal use',
+  'average % video watched':'avg video watched','avg video watched':'avg video watched',
+  'shares':'shares',
+  'turnaround time (hrs) (time from event to post)':'turnaround time hrs',
+  'turnaround time':'turnaround time hrs',
+  'content graphics submitted':'content graphics submitted',
+  'projects graphics submitted':'projects graphics submitted',
+  'business development graphics submitted':'bd graphics submitted',
+  'bd graphics submitted':'bd graphics submitted',
+  'projects in progress':'projects in progress','projects executed':'projects executed',
+  '# of volunteers':'volunteers','volunteers':'volunteers',
+};
+const NOTE_KEYS = new Set(['notes:','notes','note:','graphic notes:','graphic notes','graphics notes:','graphics notes','sam notes:','sam notes','video notes:','video notes','video/photo notes:','video/photo notes']);
+const KNOWN_BRANDS = ['group','ramps','edo','cubby cargo','mawi','evolve'];
+const ALWAYS_PCT_METRICS = new Set(['conversion rate','engagement rate','budget variance']);
+const CURRENCY_METRICS   = new Set(['total ad spend','budget allocated','actual spend','revenue influenced','profit influenced','pipeline revenue influenced','cost per click','cost per lead']);
+const GOOD_WHEN_UP = new Set(['leads generated','follower growth','media mentions','speaking engagements','strategic partnerships','thought leadership published','events executed','projects executed','videos released','content graphics submitted','projects graphics submitted','content internal use','shares','avg feedback score','executive panels features','campaigns launched','pipeline revenue influenced','revenue influenced','profit influenced','attendees actual']);
+const NEUTRAL_WHEN_UP = new Set(['total ad spend','budget allocated','actual spend','cost per click','cost per lead','vendors owed']);
+const BAD_WHEN_UP = new Set(['crisis incidents managed','negative mentions mitigated']);
+
+/* ════════════════════════════════════════════════
+   UTILITIES
+════════════════════════════════════════════════ */
+const esc  = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const norm = s => s==null?'':String(s).trim().toLowerCase().replace(/\s+/g,' ').replace(/['']/g,"'");
+function normCat(r){ const n=norm(r); return CAT_ALIAS[n]||n; }
+function normMet(r){ const n=norm(r); return MET_ALIAS[n]||n; }
+function isNoteRow(r){ return NOTE_KEYS.has(norm(r)); }
+function isBlankOrNA(v){ if(v==null)return true; const s=String(v).trim().toLowerCase(); return s===''||s==='n/a'||s==='na'||s.startsWith('#'); }
+
+function parseNum(val){
+  if(isBlankOrNA(val))return null;
+  const s=String(val).trim();
+  if(s.startsWith('#'))return null;
+  if(/months?/i.test(s))return null;
+  const secM=s.match(/^([\d.]+)\s*sec/i); if(secM)return parseFloat(secM[1]);
+  const embPct=s.match(/[\d,]+\.?\d*%/);
+  if(embPct){ const n=parseFloat(embPct[0].replace(/,/g,'')); return isNaN(n)?null:n/100; }
+  const embedded=s.match(/[\d,]+\.?\d*/);
+  if(embedded&&!/^[\d,.\-+eE]+$/.test(s.trim())){ const n=parseFloat(embedded[0].replace(/,/g,'')); return isNaN(n)?null:n; }
+  const n=parseFloat(s.replace(/[$,]/g,'')); return isNaN(n)?null:n;
+}
+function fmtVal(val,metKey){
+  if(val==null)return'\u2014';
+  const m=normMet(metKey);
+  if(CURRENCY_METRICS.has(m)){ const n=typeof val==='number'?val:parseNum(val); if(n==null)return String(val); return n>=1000?'$'+n.toLocaleString('en-US',{maximumFractionDigits:0}):'$'+n.toFixed(2); }
+  if(ALWAYS_PCT_METRICS.has(m)){ const n=typeof val==='number'?val:parseNum(val); if(n==null)return String(val); return(n*100).toFixed(2)+'%'; }
+  if(typeof val==='number')return val%1===0?val.toLocaleString():val.toFixed(2);
+  return String(val);
+}
+function fmtDelta(curN,prevN,metKey){
+  if(curN==null||prevN==null)return'';
+  const diff=curN-prevN;
+  if(diff===0)return'<span class="delta d-neu">\u2192 No change</span>';
+  const pct=prevN!==0?Math.round(Math.abs(diff/prevN)*100):'\u221e';
+  const arrow=diff>0?'\u2191':'\u2193';
+  const m=normMet(metKey);
+  let cls='d-neu';
+  if(diff>0)cls=GOOD_WHEN_UP.has(m)?'d-up-good':BAD_WHEN_UP.has(m)?'d-dn-bad':NEUTRAL_WHEN_UP.has(m)?'d-up-neu':'d-up-good';
+  else cls=GOOD_WHEN_UP.has(m)?'d-dn-bad':BAD_WHEN_UP.has(m)?'d-up-good':NEUTRAL_WHEN_UP.has(m)?'d-dn-neu':'d-dn-neu';
+  return`<span class="delta ${cls}">${arrow} ${pct}%</span>`;
+}
+const MONTH={jan:1,feb:2,mar:3,apr:4,may:5,jun:6,jul:7,aug:8,sep:9,oct:10,nov:11,dec:12};
+function periodSortKey(name){
+  const n=name.trim().toLowerCase();
+  let m=n.match(/^([a-z]+)\s+(\d+)\s*[-\u2013]\s*([a-z]+)\s+(\d+)/);
+  if(m)return(MONTH[m[1].slice(0,3)]||0)*100+parseInt(m[2]);
+  m=n.match(/^([a-z]+)\s+(\d+)\s*[-\u2013]\s*(\d+)/);
+  if(m)return(MONTH[m[1].slice(0,3)]||0)*100+parseInt(m[2]);
+  return 9999;
+}
+function isBlankSheet(data){ for(const row of data)for(const cell of row)if(typeof cell==='number'&&!isNaN(cell))return false; return true; }
+
+function parseSheet(data){
+  if(!data||data.length<2)return{records:[],notes:[],warnings:[],unknownMetrics:[],dupMetrics:[]};
+  let hdrRow=-1,brandCols={};
+  for(let r=0;r<Math.min(5,data.length);r++){
+    const found={};
+    (data[r]||[]).forEach((cell,ci)=>{const n=norm(String(cell??''));if(KNOWN_BRANDS.includes(n))found[n]=ci;});
+    if(Object.keys(found).length>=2){hdrRow=r;brandCols=found;break;}
+  }
+  if(hdrRow===-1)return{records:[],notes:[],warnings:['No brand header row found'],unknownMetrics:[],dupMetrics:[]};
+  const records=[],notes=[],warnings=[],unknownMetrics=[],dupMetrics=[];
+  let curCat=''; const seenMets={};
+  for(let r=hdrRow+1;r<data.length;r++){
+    const row=data[r]||[];
+    const rawA=String(row[0]??'').trim(),rawB=String(row[1]??'').trim();
+    if(rawA&&norm(rawA)!=='report'){const mapped=normCat(rawA);if(mapped)curCat=mapped;}
+    if(!rawB||!curCat)continue;
+    if(isNoteRow(rawB)){
+      for(const[brand,ci]of Object.entries(brandCols)){
+        const raw=row[ci];
+        if(raw!=null&&String(raw).trim().length>3&&!isBlankOrNA(raw))notes.push({category:curCat,brand,text:String(raw).trim()});
+      }
+      continue;
+    }
+    const metKey=normMet(rawB); if(!metKey)continue;
+    if(!MET_ALIAS[norm(rawB)]&&!NOTE_KEYS.has(norm(rawB)))unknownMetrics.push(`${curCat}: "${rawB}"`);
+    const dKey=curCat+'|'+metKey;
+    seenMets[dKey]=(seenMets[dKey]||0)+1;
+    if(seenMets[dKey]===2)dupMetrics.push(`${curCat}: "${rawB}"`);
+    for(const[brand,ci]of Object.entries(brandCols)){
+      const raw=row[ci];
+      records.push({category:curCat,metric:metKey,metricRaw:rawB,brand,value:parseRaw(raw),valueNum:parseNum(raw)});
+    }
+  }
+  return{records,notes,warnings,unknownMetrics,dupMetrics};
+}
+function parseRaw(val){ if(val==null)return null; const s=String(val).trim(); if(s===''||s.toLowerCase()==='n/a'||s.toLowerCase()==='na'||s.startsWith('#'))return null; return s; }
+
+function getRec(recs,cat,met,brand){const cN=normCat(cat),mN=normMet(met),bN=norm(brand);return recs.find(r=>r.category===cN&&r.metric===mN&&r.brand===bN)||null;}
+function getNum(recs,cat,met,brand){const r=getRec(recs,cat,met,brand);return r?r.valueNum:null;}
+function sumBrands(recs,cat,met){const cN=normCat(cat),mN=normMet(met);const v=recs.filter(r=>r.category===cN&&r.metric===mN&&r.brand!=='group').map(r=>r.valueNum).filter(v=>v!=null);return v.length?v.reduce((a,b)=>a+b,0):null;}
+function getGS(recs,cat,met){const g=getNum(recs,cat,met,'group');return g!=null?g:sumBrands(recs,cat,met);}
+
+/* ════════════════════════════════════════════════
+   INDEXEDDB LOAD ON STARTUP
+════════════════════════════════════════════════ */
+async function loadFromDB() {
+  try {
+    const all = await dbGetAll();
+    if (!all.length) return;
+    for (const rec of all) { S.sheets[rec.id]=rec.parsed; S.meta[rec.id]=rec.meta; }
+    rebuildState(null);
+    showDashboard();
+    render();
+    showToast(`Restored ${all.length} stored period${all.length>1?'s':''} from local storage.`);
+  } catch(e) { console.warn('IndexedDB load failed:', e); }
+}
+
+/* ════════════════════════════════════════════════
+   REBUILD STATE FROM S.sheets
+════════════════════════════════════════════════ */
+function rebuildState(preferSel) {
+  const sorted = Object.keys(S.sheets).sort((a,b) => periodSortKey(a)-periodSortKey(b));
+  S.periods = sorted;
+  if (!sorted.length) { updateSidebarCount(); return; }
+  if (preferSel && S.sheets[preferSel]) S.sel = preferSel;
+  else if (!S.sheets[S.sel]) S.sel = sorted[sorted.length-1];
+  const idx = S.periods.indexOf(S.sel);
+  S.prev = idx > 0 ? S.periods[idx-1] : '';
+  // Rebuild aggregate validation
+  const latest = S.sheets[S.periods[S.periods.length-1]];
+  const foundCats = new Set(latest.records.map(r=>r.category));
+  const expCats=['pipeline impact','market growth and visibility','reputation and risk','events roi tt','events roi gy','creative and visual media'];
+  S.validation = {
+    detected: S.periods, skipped: [],
+    metrics:    Object.values(S.meta).reduce((a,m)=>a+(m.metrics||0),0),
+    numerics:   Object.values(S.meta).reduce((a,m)=>a+(m.numerics||0),0),
+    narratives: Object.values(S.meta).reduce((a,m)=>a+(m.narratives||0),0),
+    missingCats: expCats.filter(c=>!foundCats.has(c)),
+    unknownMetrics:[], dupMetrics:[],
+  };
+  updateSelectors();
+  updateSidebarCount();
+}
+function updateSidebarCount() {
+  const n = S.periods.length;
+  document.getElementById('managePeriodCount').textContent = n;
+  const sc = document.getElementById('sidebarStorageCount');
+  if (sc) sc.textContent = n===0?'No periods stored':`${n} period${n>1?'s':''} stored`;
+  const latest = S.meta[S.periods[S.periods.length-1]];
+  const fi = document.getElementById('sidebarFileInfo');
+  if (fi) fi.textContent = latest?`Latest: ${latest.filename}`:'';
+}
+function updateSelectors() {
+  const pSel = document.getElementById('periodSel');
+  pSel.innerHTML = S.periods.map(p=>`<option value="${esc(p)}"${p===S.sel?' selected':''}>${esc(p)}</option>`).join('');
+  pSel.onchange = function(){ const i=S.periods.indexOf(this.value); S.sel=this.value; S.prev=i>0?S.periods[i-1]:''; render(); };
+  const allBrands=new Set();
+  for(const p of Object.values(S.sheets))p.records.forEach(r=>{if(r.brand!=='group')allBrands.add(r.brand);});
+  const bSel=document.getElementById('brandSel');
+  bSel.innerHTML='<option value="all">All Brands</option>'+[...allBrands].map(b=>`<option value="${esc(b)}">${esc(b.charAt(0).toUpperCase()+b.slice(1))}</option>`).join('');
+  bSel.onchange=function(){S.brand=this.value;render();};
+}
+function showDashboard() {
+  document.getElementById('topFilters').style.display='flex';
+  document.getElementById('resetBtn').style.display='';
+  document.getElementById('topbarPeriod').style.display='flex';
+  document.getElementById('noDataState').style.display='none';
+  document.getElementById('dashContent').style.display='block';
+}
+
+/* ════════════════════════════════════════════════
+   FILE UPLOAD — APPEND MODE (never replaces all data)
+════════════════════════════════════════════════ */
+function attachUpload(el) {
+  if (!el) return;
+  el.addEventListener('change', function(e) {
+    const f=e.target.files[0]; if(!f)return;
+    if(!/\.(xlsx|xls)$/i.test(f.name)){showErr('Invalid file. Please upload an Excel workbook (.xlsx or .xls).');return;}
+    const r=new FileReader();
+    r.onload=ev=>{try{processWb(ev.target.result,f.name);}catch(err){showErr('Could not read workbook: '+err.message);console.error(err);}};
+    r.readAsArrayBuffer(f); this.value='';
+  });
+}
+attachUpload(document.getElementById('fileInput'));
+attachUpload(document.getElementById('fileInput2'));
+attachUpload(document.getElementById('mgmtFileInput'));
+const impEl = document.getElementById('importFileInput');
+if (impEl) impEl.addEventListener('change', function(e) {
+  const f=e.target.files[0]; if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>{try{importData(ev.target.result);}catch(err){showErr('Import failed: '+err.message);}};
+  r.readAsText(f); this.value='';
+});
+
+async function processWb(buf, filename) {
+  clearErr();
+  const wb  = XLSX.read(buf,{type:'array',cellDates:false});
+  const now = new Date().toLocaleString('en-TT',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+  // Parse every completed sheet from this workbook
+  const newSheets={};
+  for(const name of wb.SheetNames){
+    const ws=wb.Sheets[name];
+    const data=XLSX.utils.sheet_to_json(ws,{header:1,defval:null,raw:true});
+    if(isBlankSheet(data))continue;
+    const parsed=parseSheet(data);
+    if(!parsed.records.length)continue;
+    newSheets[name]={parsed,filename,now};
+  }
+  if(!Object.keys(newSheets).length){showErr('No completed reporting periods found in this file.');return;}
+
+  const duplicates = Object.keys(newSheets).filter(n=>S.sheets[n]);
+  const fresh      = Object.keys(newSheets).filter(n=>!S.sheets[n]);
+
+  async function commitSheet(name) {
+    const {parsed,filename:fn,now:ts}=newSheets[name];
+    const meta={filename:fn,uploadTime:ts,metrics:parsed.records.length,numerics:parsed.records.filter(r=>r.valueNum!=null).length,narratives:parsed.notes.length,unknownMetrics:[...new Set(parsed.unknownMetrics)],dupMetrics:[...new Set(parsed.dupMetrics)]};
+    S.sheets[name]=parsed; S.meta[name]=meta;
+    await dbPut({id:name,parsed,meta});
+  }
+
+  for(const n of fresh) await commitSheet(n);
+
+  if(!duplicates.length){
+    rebuildState(fresh[fresh.length-1]||null);
+    showDashboard(); render();
+    showToast(`Added ${fresh.length} new period${fresh.length>1?'s':''} from \u201c${filename}\u201d.`);
+    if(_activeTab==='manage')renderManageTab();
+    return;
+  }
+
+  // Process duplicates one-by-one via modal
+  let dupIdx=0, finalSel=fresh.length?fresh[fresh.length-1]:null;
+  if(fresh.length){rebuildState(fresh[fresh.length-1]);showDashboard();render();}
+
+  function processDup(){
+    if(dupIdx>=duplicates.length){
+      rebuildState(finalSel); showDashboard(); render();
+      showToast(`Upload complete. ${fresh.length} new, ${duplicates.length} duplicate(s) handled.`);
+      if(_activeTab==='manage')renderManageTab();
+      return;
+    }
+    const name=duplicates[dupIdx];
+    const existing=S.meta[name];
+    showDupModal(
+      `\u201c${name}\u201d already exists`,
+      `Previously uploaded from \u201c${existing?.filename||'unknown'}\u201d on ${existing?.uploadTime||'unknown date'}.\n\nNew data is from \u201c${filename}\u201d.\n\nWhat would you like to do?`,
+      async()=>{await commitSheet(name);finalSel=name;dupIdx++;closeDupModal();processDup();},
+      ()=>{dupIdx++;closeDupModal();processDup();},
+      ()=>{closeDupModal();if(fresh.length){rebuildState(finalSel);showDashboard();render();showToast(`Upload cancelled for duplicates. ${fresh.length} new period${fresh.length>1?'s':''} were added.`);if(_activeTab==='manage')renderManageTab();}}
+    );
+  }
+  processDup();
+}
+
+/* ════════════════════════════════════════════════
+   DUPLICATE MODAL
+════════════════════════════════════════════════ */
+function showDupModal(title,body,onReplace,onSkip,onCancel){
+  document.getElementById('dupModalTitle').textContent=title;
+  document.getElementById('dupModalBody').textContent=body;
+  document.getElementById('dupModal').style.display='flex';
+  document.getElementById('dupReplaceBtn').onclick=onReplace;
+  document.getElementById('dupSkipBtn').onclick=onSkip;
+  document.getElementById('dupCancelBtn').onclick=onCancel;
+}
+function closeDupModal(){ document.getElementById('dupModal').style.display='none'; }
+
+/* ════════════════════════════════════════════════
+   CONFIRM MODAL
+════════════════════════════════════════════════ */
+function showConfirmModal(title,body,onOk){
+  document.getElementById('confirmTitle').textContent=title;
+  document.getElementById('confirmBody').textContent=body;
+  document.getElementById('confirmOkBtn').onclick=()=>{closeConfirmModal();onOk();};
+  document.getElementById('confirmModal').style.display='flex';
+}
+function closeConfirmModal(){ document.getElementById('confirmModal').style.display='none'; }
+
+/* ════════════════════════════════════════════════
+   DELETE / CLEAR
+════════════════════════════════════════════════ */
+async function deletePeriod(name){
+  showConfirmModal(`Delete \u201c${name}\u201d?`,
+    `This will permanently remove \u201c${name}\u201d from local storage. This cannot be undone.`,
+    async()=>{
+      delete S.sheets[name]; delete S.meta[name]; await dbDelete(name);
+      if(!S.sheets[S.sel]){S.sel='';S.prev='';}
+      rebuildState(null);
+      if(S.periods.length){showDashboard();render();}
+      else{document.getElementById('noDataState').style.display='';document.getElementById('dashContent').style.display='none';}
+      showToast(`\u201c${name}\u201d removed.`);
+      renderManageTab();
+    }
+  );
+}
+async function confirmClearAll(){
+  if(!S.periods.length){showToast('No stored data to clear.');return;}
+  showConfirmModal('Clear all stored data?',
+    `This will permanently delete all ${S.periods.length} stored period${S.periods.length>1?'s':''} from local storage. This cannot be undone.`,
+    async()=>{
+      await dbClear(); S.sheets={}; S.meta={}; S.periods=[]; S.sel=''; S.prev=''; S.validation={};
+      document.getElementById('noDataState').style.display='';
+      document.getElementById('dashContent').style.display='none';
+      document.getElementById('topFilters').style.display='none';
+      document.getElementById('topbarPeriod').style.display='none';
+      updateSidebarCount();
+      showToast('All stored data cleared.');
+      renderManageTab();
+    }
+  );
+}
+
+/* ════════════════════════════════════════════════
+   EXPORT / IMPORT BACKUP
+════════════════════════════════════════════════ */
+function exportData(){
+  if(!S.periods.length){showToast('No data to export.');return;}
+  const payload={version:1,exportedAt:new Date().toISOString(),periods:{}};
+  for(const name of S.periods)payload.periods[name]={parsed:S.sheets[name],meta:S.meta[name]};
+  const blob=new Blob([JSON.stringify(payload)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url; a.download=`comms-dashboard-backup-${new Date().toISOString().slice(0,10)}.json`;
+  a.click(); URL.revokeObjectURL(url);
+  showToast(`Exported ${S.periods.length} period${S.periods.length>1?'s':''} to backup file.`);
+}
+async function importData(text){
+  let payload; try{payload=JSON.parse(text);}catch(e){showErr('Invalid backup file \u2014 could not parse JSON.');return;}
+  if(!payload.periods||typeof payload.periods!=='object'){showErr('Invalid backup file \u2014 missing periods data.');return;}
+  const incoming=Object.keys(payload.periods);
+  if(!incoming.length){showToast('Backup file contains no periods.');return;}
+  let imported=0;
+  for(const name of incoming){
+    const{parsed,meta}=payload.periods[name];
+    S.sheets[name]=parsed; S.meta[name]=meta;
+    await dbPut({id:name,parsed,meta}); imported++;
+  }
+  rebuildState(incoming[incoming.length-1]);
+  showDashboard(); render();
+  showToast(`Imported ${imported} period${imported>1?'s':''} from backup.`);
+  renderManageTab();
+}
+
+/* ════════════════════════════════════════════════
+   MANAGE TAB RENDERER
+════════════════════════════════════════════════ */
+function renderManageTab(){
+  const n=S.periods.length;
+  const totalM=Object.values(S.meta).reduce((a,m)=>a+(m.metrics||0),0);
+  const totalN=Object.values(S.meta).reduce((a,m)=>a+(m.numerics||0),0);
+  document.getElementById('mgmt-summary').textContent=n?`${n} reporting period${n>1?'s':''} stored in local browser storage`:'No reporting periods stored yet';
+  document.getElementById('mgmt-subsummary').textContent=n?`${totalM.toLocaleString()} metric rows \u00b7 ${totalN.toLocaleString()} numeric values \u00b7 All data is stored locally in this browser \u2014 never transmitted`:'';
+  if(!n){document.getElementById('mgmt-empty').style.display='';document.getElementById('mgmt-table').style.display='none';return;}
+  document.getElementById('mgmt-empty').style.display='none';
+  document.getElementById('mgmt-table').style.display='';
+  document.getElementById('mgmt-tbody').innerHTML=S.periods.map(name=>{
+    const m=S.meta[name]||{};
+    const isCur=name===S.sel;
+    return`<tr style="${isCur?'background:#FFFCF0;':''}">
+      <td><div style="font-weight:600;color:var(--text-h)">${esc(name)}</div>${isCur?'<span class="badge b-amber" style="font-size:9px;margin-top:3px">Currently viewing</span>':''}</td>
+      <td style="color:var(--text-s)">${esc(m.filename||'\u2014')}</td>
+      <td style="color:var(--text-s);white-space:nowrap">${esc(m.uploadTime||'\u2014')}</td>
+      <td style="font-variant-numeric:tabular-nums">${(m.metrics||0).toLocaleString()}</td>
+      <td style="font-variant-numeric:tabular-nums">${(m.numerics||0).toLocaleString()}</td>
+      <td><div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="tb-btn tb-btn-ghost" style="height:26px;font-size:11px" onclick="selectPeriod('${esc(name)}')">View</button>
+        <label style="position:relative;cursor:pointer;height:26px;display:inline-flex;align-items:center;gap:4px;padding:0 8px;border:1.5px solid var(--border);border-radius:6px;background:var(--page-bg);color:var(--text-s);font-size:11px;font-weight:500">Replace<input type="file" accept=".xlsx,.xls" onchange="replaceSpecificPeriod('${esc(name)}',this)" style="position:absolute;inset:0;opacity:0;cursor:pointer"></label>
+        <button class="tb-btn" style="height:26px;font-size:11px;background:var(--red-soft);color:var(--red);border-color:#F5A0A0" onclick="deletePeriod('${esc(name)}')">Delete</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+function selectPeriod(name){
+  if(!S.sheets[name])return;
+  const idx=S.periods.indexOf(name);
+  S.sel=name; S.prev=idx>0?S.periods[idx-1]:'';
+  document.getElementById('periodSel').value=name;
+  showDashboard(); render();
+  const btn=document.querySelector('.nav-item[data-tab="overview"]');
+  switchTab('overview',btn);
+}
+
+async function replaceSpecificPeriod(periodName,fileInput){
+  const f=fileInput.files[0]; if(!f)return;
+  const r=new FileReader();
+  r.onload=async ev=>{
+    try{
+      const wb=XLSX.read(ev.target.result,{type:'array',cellDates:false});
+      const now=new Date().toLocaleString('en-TT',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'});
+      let found=false;
+      for(const name of wb.SheetNames){
+        const ws=wb.Sheets[name];
+        const data=XLSX.utils.sheet_to_json(ws,{header:1,defval:null,raw:true});
+        if(isBlankSheet(data))continue;
+        const parsed=parseSheet(data); if(!parsed.records.length)continue;
+        const meta={filename:f.name,uploadTime:now,metrics:parsed.records.length,numerics:parsed.records.filter(r=>r.valueNum!=null).length,narratives:parsed.notes.length,unknownMetrics:[...new Set(parsed.unknownMetrics)],dupMetrics:[...new Set(parsed.dupMetrics)]};
+        S.sheets[periodName]=parsed; S.meta[periodName]=meta;
+        await dbPut({id:periodName,parsed,meta});
+        found=true; break;
+      }
+      if(!found){showErr('No valid data found in the uploaded file.');return;}
+      rebuildState(periodName); render();
+      showToast(`\u201c${periodName}\u201d replaced successfully.`);
+      renderManageTab();
+    }catch(err){showErr('Could not read file: '+err.message);}
+  };
+  r.readAsArrayBuffer(f); fileInput.value='';
+}
+
+/* ════════════════════════════════════════════════
+   TOAST
+════════════════════════════════════════════════ */
+let _toastTimer;
+function showToast(msg,duration=3500){
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.style.display='block';
+  clearTimeout(_toastTimer);
+  _toastTimer=setTimeout(()=>{el.style.display='none';},duration);
+}
+
+/* ════════════════════════════════════════════════
+   RENDER
+════════════════════════════════════════════════ */
+function render(){
+  for(const ch of Object.values(S.charts))try{ch.destroy();}catch(e){}
+  S.charts={};
+  const cur=S.sheets[S.sel],prev=S.prev?S.sheets[S.prev]:null;
+  if(!cur)return;
+  const cr=cur.records,pr=prev?prev.records:[];
+  document.getElementById('topPeriodBadge').textContent=S.sel;
+  document.getElementById('topPrevBadge').textContent=S.prev||'No previous period';
+  renderValPanel();
+  renderOverview(cr,pr,cur.notes);
+  renderPipelineTab(cr,pr,cur.notes);
+  renderMarketTab(cr,pr,cur.notes);
+  renderReputationTab(cr,pr,cur.notes);
+  renderEventsTab('events roi tt','TT',cr,pr,cur.notes,'content-eventsTT');
+  renderEventsTab('events roi gy','GY',cr,pr,cur.notes,'content-eventsGY');
+  renderCreativeTab(cr,pr,cur.notes);
+  renderSponsorshipsTab(cr,pr,cur.notes);
+  renderInternalTab(cr,pr,cur.notes);
+  renderOpsTable(cr,pr);
+}
+
+/* ─── VALIDATION PANEL ─── */
+function renderValPanel(){
+  const v=S.validation;
+  const hasIssues=(v.missingCats||[]).length;
+  document.getElementById('valStatusBadge').textContent=hasIssues?'\u26a0 Issues found':'\u2713 All checks passed';
+  document.getElementById('valStatusBadge').className='badge '+(hasIssues?'b-amber':'b-green');
+  const n=S.periods.length;
+  let h=`<div class="val-section-lbl">Periods in Local Storage (${n})</div>
+    <div class="val-sheets-row">${S.periods.map(s=>`<span class="val-chip vc-ok">\u2713 ${esc(s)}</span>`).join('')}</div>`;
+  h+=`<div class="val-stats">
+    <div class="val-stat"><div class="val-dot" style="background:#22C55E"></div>Stored periods: <strong>${n}</strong></div>
+    <div class="val-stat"><div class="val-dot" style="background:#22C55E"></div>Total metric rows: <strong>${v.metrics||0}</strong></div>
+    <div class="val-stat"><div class="val-dot" style="background:#1B7A6E"></div>Numeric values: <strong>${v.numerics||0}</strong></div>
+    <div class="val-stat"><div class="val-dot" style="${hasIssues?'background:#EF4444':'background:#22C55E'}"></div>Missing expected categories: <strong>${hasIssues?v.missingCats.join(', '):'None'}</strong></div>
+  </div>`;
+  if(hasIssues)h+=`<div style="margin-top:10px;padding:10px 14px;background:#FFF8E6;border:1px solid #F5C842;border-radius:8px;font-size:12px;color:#6B4A00">\u26a0 Expected categories not found in latest period: <strong>${v.missingCats.join(', ')}</strong></div>`;
+  document.getElementById('valContent').innerHTML=h;
+}
+
+/* ─── KPI CARD BUILDER ─── */
+function kpiCard(label,curN,prevN,metKey,iconEmoji,accentColor){
+  const fCur=fmtVal(curN,metKey);
+  const fPrev=prevN!=null?fmtVal(prevN,metKey):null;
+  const delta=fmtDelta(curN,prevN,metKey);
+  const barColor=accentColor||'#E8A020';
+  const iconBg=accentColor?accentColor+'22':'#FFF3DC';
+  return`<div class="kpi-card">
+    <div class="kpi-accent-bar" style="background:${barColor}"></div>
+    <div class="kpi-icon-wrap" style="background:${iconBg}">${iconEmoji||'📊'}</div>
+    <div class="kpi-label">${esc(label)}</div>
+    <div class="kpi-value">${curN!=null?esc(fCur):'<span style="font-size:17px;color:var(--text-m)">—</span>'}</div>
+    <div class="kpi-meta">${delta}${fPrev?`<span class="kpi-prev-lbl">prev ${esc(fPrev)}</span>`:'<span class="kpi-prev-lbl" style="color:var(--text-m)">no prior data</span>'}</div>
+  </div>`;
+}
+
+/* ─── BRAND TABLE ─── */
+function brandTbl(cr,pr,cat,metrics){
+  const catN=normCat(cat);
+  const brands=[...new Set(cr.filter(r=>r.category===catN&&r.brand!=='group').map(r=>r.brand))];
+  const dispB=S.brand!=='all'?brands.filter(b=>b===S.brand):brands;
+  if(!dispB.length)return`<div class="empty-state"><div class="empty-msg">No data for selected brand.</div></div>`;
+  const mets=metrics.map(m=>({raw:m,n:normMet(m)}));
+  let h=`<div class="tbl-wrap"><table class="data-tbl"><thead><tr><th>Brand</th>${mets.map(m=>`<th>${esc(m.raw)}</th>`).join('')}${pr.length?`<th>vs prev (${esc(mets[0].raw)})</th>`:''}</tr></thead><tbody>`;
+  for(const brand of dispB){
+    h+=`<tr><td><span class="brand-pill">${esc(brand)}</span></td>`;
+    for(const m of mets){
+      const rec=cr.find(r=>r.category===catN&&r.metric===m.n&&r.brand===brand);
+      h+=`<td>${rec?.value!=null?esc(fmtVal(rec.valueNum!=null?rec.valueNum:rec.value,m.raw)):'—'}</td>`;
+    }
+    if(pr.length){
+      const m0=mets[0];
+      const cR=cr.find(r=>r.category===catN&&r.metric===m0.n&&r.brand===brand);
+      const pR=pr.find(r=>r.category===catN&&r.metric===m0.n&&r.brand===brand);
+      h+=`<td>${fmtDelta(cR?.valueNum,pR?.valueNum,m0.raw)}</td>`;
+    }
+    h+='</tr>';
+  }
+  return h+'</tbody></table></div>';
+}
+
+/* ─── NOTES PANEL ─── */
+function notesHtml(notes,cat){
+  const catN=normCat(cat);
+  const rel=notes.filter(n=>n.category===catN&&n.text&&n.text.trim().length>5);
+  if(!rel.length)return'';
+  const seen=new Set();
+  const dedup=rel.filter(n=>{if(seen.has(n.text))return false;seen.add(n.text);return true;});
+  return`<div class="notes-card"><div class="notes-card-title">Notes &amp; Qualitative Outcomes</div>${dedup.map(n=>`<div class="note-item"><div class="note-brand-lbl">${esc(n.brand)}</div><div class="note-body">${esc(n.text)}</div></div>`).join('')}</div>`;
+}
+
+/* ─── BAR CHART ─── */
+function barChart(id,labels,datasets,opts={}){
+  const ctx=document.getElementById(id); if(!ctx)return;
+  S.charts[id]=new Chart(ctx.getContext('2d'),{
+    type:'bar',data:{labels,datasets},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:datasets.length>1,labels:{font:{size:10},boxWidth:10,padding:12}},
+        tooltip:{callbacks:{label:c=>`${c.dataset.label||''}: ${opts.currency?'$'+c.raw?.toLocaleString():c.raw}`}}},
+      scales:{x:{ticks:{font:{size:10},maxRotation:25},grid:{display:false}},
+        y:{ticks:{font:{size:10},callback:opts.currency?v=>'$'+v.toLocaleString():undefined},beginAtZero:true,grid:{color:'#F0F4F9'}}},
+      ...opts.co}
+  });
+}
+
+/* ─── LINE CHART ─── */
+function lineChart(id,labels,datasets,opts={}){
+  const ctx=document.getElementById(id); if(!ctx)return;
+  S.charts[id]=new Chart(ctx.getContext('2d'),{
+    type:'line',data:{labels,datasets},
+    options:{responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:datasets.length>1,labels:{font:{size:10},boxWidth:10}},
+        tooltip:{callbacks:{label:c=>c.raw==null?'No data':fmtVal(c.raw,opts.met||'')}}},
+      scales:{x:{ticks:{font:{size:10},maxRotation:25},grid:{display:false}},
+        y:{ticks:{font:{size:10}},beginAtZero:true,grid:{color:'#F0F4F9'}}}}
+  });
+}
+
+/* ════════════════════════════════════════════════
+   OVERVIEW TAB
+════════════════════════════════════════════════ */
+function renderOverview(cr,pr){
+  // Hero period
+  document.getElementById('execHeroPeriod').textContent=`Reporting period: ${S.sel}${S.prev?' | Compared with: '+S.prev:''}`;
+
+  // Hero badges
+  const leads=getGS(cr,'pipeline impact','leads generated');
+  const foll =getGS(cr,'market growth and visibility','follower growth');
+  const evTT =getGS(cr,'events roi tt','events executed');
+  const evGY =getGS(cr,'events roi gy','events executed');
+  let badges='';
+  if(leads!=null)badges+=`<span class="hero-badge hero-badge-amber">${leads.toLocaleString()} Leads</span>`;
+  if(foll!=null&&foll>0)badges+=`<span class="hero-badge">${foll.toLocaleString()} New Followers</span>`;
+  if(evTT!=null&&evTT>0)badges+=`<span class="hero-badge">${evTT} Events (TT)</span>`;
+  if(evGY!=null&&evGY>0)badges+=`<span class="hero-badge">${evGY} Events (GY)</span>`;
+  document.getElementById('execHeroBadges').innerHTML=badges;
+
+  // Exec summary columns
+  const pos=[],concerns=[],attn=[];
+  const prevLeads=pr.length?getGS(pr,'pipeline impact','leads generated'):null;
+  if(leads!=null){
+    if(prevLeads!=null&&leads>prevLeads)pos.push(`Leads rose to ${leads.toLocaleString()} (↑ from ${prevLeads.toLocaleString()})`);
+    else if(leads>0)pos.push(`${leads.toLocaleString()} leads generated this period`);
+    else if(prevLeads!=null&&leads<prevLeads)concerns.push(`Leads declined to ${leads.toLocaleString()} from ${prevLeads.toLocaleString()}`);
+  }
+  if(foll!=null&&foll>0)pos.push(`${foll.toLocaleString()} new followers across all brands`);
+  const media=getGS(cr,'market growth and visibility','media mentions');
+  if(media!=null&&media>0)pos.push(`${media} media mention${media>1?'s':''} recorded`);
+  if(evTT!=null&&evTT>0)pos.push(`${evTT} event${evTT>1?'s':''} executed in Trinidad`);
+  if(evGY!=null&&evGY>0)pos.push(`${evGY} event${evGY>1?'s':''} executed in Guyana`);
+  const budTT=getGS(cr,'events roi tt','budget allocated'),actTT=getGS(cr,'events roi tt','actual spend');
+  if(budTT&&actTT&&budTT>0){const p=((budTT-actTT)/budTT*100);if(p>0)pos.push(`TT events ${p.toFixed(1)}% under budget`);if(p<-5)concerns.push(`TT events exceeded budget by ${Math.abs(p).toFixed(1)}%`);}
+  const crisis=getGS(cr,'reputation and risk','crisis incidents managed');
+  if(crisis!=null&&crisis>0)attn.push(`${crisis} crisis incident${crisis>1?'s':''} — see Reputation section`);
+  const vendTT=getGS(cr,'events roi tt','vendors owed'),vendGY=getGS(cr,'events roi gy','vendors owed');
+  if(vendTT!=null&&vendTT>0)attn.push(`${vendTT} vendor payment${vendTT>1?'s':''} outstanding in Trinidad`);
+  if(vendGY!=null&&vendGY>0)attn.push(`${vendGY} vendor payment${vendGY>1?'s':''} outstanding in Guyana`);
+  const exec=getGS(cr,'reputation and risk','executive panels features');
+  if(exec!=null&&exec>0)pos.push(`${exec} executive panel${exec>1?'s':''}/feature${exec>1?'s':''}`);
+  const tl=getGS(cr,'market growth and visibility','thought leadership published');
+  if(tl!=null&&tl>0)pos.push(`${tl} thought leadership piece${tl>1?'s':''} published`);
+  const vids=getGS(cr,'creative and visual media','videos released');
+  const gfx=getGS(cr,'creative and visual media','content graphics submitted');
+  if(vids!=null&&gfx!=null)pos.push(`${(vids||0)+(gfx||0)} total creative deliverables`);
+  if(!cr.find(r=>r.category==='sponsorships'&&r.valueNum!=null))attn.push('Sponsorships: no data entered this period');
+  if(!cr.find(r=>r.category==='internal engagements'&&r.valueNum!=null))attn.push('Internal Engagements: no data entered this period');
+
+  const col=(t,items,bcls)=>`<div><div class="exec-col-title">${t}</div>${items.length?items.slice(0,5).map(i=>`<div class="exec-item"><div class="exec-bullet ${bcls}"></div>${esc(i)}</div>`).join(''):`<div class="exec-item"><div class="exec-bullet" style="background:rgba(255,255,255,.2)"></div>Nothing to report</div>`}</div>`;
+  document.getElementById('execCols').innerHTML=col('✓ Positive Outcomes',pos,'bull-green')+col('⚑ Areas of Concern',concerns,'bull-amber')+col('▲ Requires Attention',attn,'bull-red');
+
+  // Attention panel (below hero)
+  if(attn.length){
+    document.getElementById('attnPanel').style.display='block';
+    document.getElementById('attnItems').innerHTML=attn.map(a=>`<div class="attn-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>${esc(a)}</div>`).join('');
+  } else {
+    document.getElementById('attnPanel').style.display='none';
+  }
+
+  // KPI grid (overview)
+  document.getElementById('kpiPeriodInfo').textContent=`${S.sel} vs ${S.prev||'—'}`;
+  const b=S.brand==='all'?'group':S.brand;
+  const kpis=[
+    {label:'Leads Generated',cat:'pipeline impact',met:'leads generated',icon:'🎯',col:'#E8A020'},
+    {label:'Campaigns Launched',cat:'pipeline impact',met:'campaigns launched',icon:'📣',col:'#3B7DD8'},
+    {label:'Follower Growth',cat:'market growth and visibility',met:'follower growth',icon:'📈',col:'#1B7A6E'},
+    {label:'Media Mentions',cat:'market growth and visibility',met:'media mentions',icon:'📰',col:'#6B5CE7'},
+    {label:'Events Executed (TT)',cat:'events roi tt',met:'events executed',icon:'📅',col:'#E05A4B'},
+    {label:'Events Executed (GY)',cat:'events roi gy',met:'events executed',icon:'📅',col:'#E8A020'},
+    {label:'Budget Allocated (TT)',cat:'events roi tt',met:'budget allocated',icon:'💰',col:'#344A60'},
+    {label:'Actual Spend (TT)',cat:'events roi tt',met:'actual spend',icon:'💳',col:'#E8A020'},
+    {label:'Videos Released',cat:'creative and visual media',met:'videos released',icon:'🎬',col:'#1B7A6E'},
+    {label:'Content Graphics',cat:'creative and visual media',met:'content graphics submitted',icon:'🎨',col:'#3B7DD8'},
+    {label:'Executive Features',cat:'reputation and risk',met:'executive panels features',icon:'🏆',col:'#6B5CE7'},
+    {label:'Speaking Engagements',cat:'market growth and visibility',met:'speaking engagements',icon:'🎤',col:'#344A60'},
+  ];
+  document.getElementById('kpiGrid').innerHTML=kpis.map(k=>{
+    let c=getNum(cr,k.cat,k.met,b),p=pr.length?getNum(pr,k.cat,k.met,b):null;
+    if(c==null&&b!=='group'){c=getNum(cr,k.cat,k.met,'group');p=pr.length?getNum(pr,k.cat,k.met,'group'):null;}
+    return kpiCard(k.label,c,p,k.met,k.icon,k.col);
+  }).join('');
+
+  // Trend charts
+  const trendDefs=[
+    {id:'tr-leads',title:'Leads Generated',cat:'pipeline impact',met:'leads generated',col:'#E8A020'},
+    {id:'tr-foll',title:'Follower Growth',cat:'market growth and visibility',met:'follower growth',col:'#1B7A6E'},
+    {id:'tr-spend',title:'Total Ad Spend',cat:'pipeline impact',met:'total ad spend',col:'#3B7DD8'},
+  ];
+  document.getElementById('trendsGrid').innerHTML=trendDefs.map(d=>`<div class="chart-card"><div class="chart-card-title">${esc(d.title)}</div><div class="chart-h chart-h-200"><canvas id="${d.id}"></canvas></div></div>`).join('');
+  trendDefs.forEach(d=>{
+    const vals=S.periods.map(p=>{const recs=S.sheets[p]?.records||[];return getGS(recs,d.cat,d.met);});
+    const labels=S.periods.map(p=>p.length>13?p.slice(0,13)+'…':p);
+    const ctx=document.getElementById(d.id);
+    if(!ctx||!vals.some(v=>v!=null)){if(ctx)ctx.parentElement.innerHTML='<div class="empty-state" style="padding:30px 0">No trend data yet</div>';return;}
+    S.charts[d.id]=new Chart(ctx.getContext('2d'),{
+      type:'line',data:{labels,datasets:[{data:vals,borderColor:d.col,backgroundColor:d.col+'18',borderWidth:2.5,pointRadius:4,pointBackgroundColor:d.col,fill:true,tension:.35,spanGaps:true}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.raw==null?'No data':fmtVal(c.raw,d.met)}}},
+        scales:{x:{ticks:{font:{size:10},maxRotation:25},grid:{display:false}},y:{ticks:{font:{size:10}},beginAtZero:true,grid:{color:'#F0F4F9'}}}}
+    });
+  });
+
+  // Overview brand leads chart
+  const brands=[...new Set(cr.filter(r=>r.category===normCat('pipeline impact')&&r.brand!=='group').map(r=>r.brand))];
+  const dispB=S.brand!=='all'?brands.filter(b2=>b2===S.brand):brands;
+  const bLabels=dispB.map(b2=>b2.charAt(0).toUpperCase()+b2.slice(1));
+  const leadsData=dispB.map(b2=>getNum(cr,'pipeline impact','leads generated',b2));
+  const prevLeadsData=pr.length?dispB.map(b2=>getNum(pr,'pipeline impact','leads generated',b2)):[];
+  const ctxBrands=document.getElementById('ch-ov-brands');
+  if(ctxBrands&&leadsData.some(v=>v!=null)){
+    const ds=[{label:'Current',data:leadsData,backgroundColor:'#E8A02099',borderRadius:6}];
+    if(prevLeadsData.some(v=>v!=null))ds.push({label:'Previous',data:prevLeadsData,backgroundColor:'#1B7A6E55',borderRadius:6});
+    barChart('ch-ov-brands',bLabels,ds,{co:{plugins:{legend:{display:ds.length>1,labels:{font:{size:10},boxWidth:10}}}}});
+  } else if(ctxBrands){
+    ctxBrands.parentElement.innerHTML='<div class="empty-state" style="padding:40px 0">No leads data</div>';
+  }
+
+  // Overview budget chart
+  const budDataTT=dispB.map(b2=>getNum(cr,'events roi tt','budget allocated',b2));
+  const actDataTT=dispB.map(b2=>getNum(cr,'events roi tt','actual spend',b2));
+  const budDataGY=dispB.map(b2=>getNum(cr,'events roi gy','budget allocated',b2));
+  const actDataGY=dispB.map(b2=>getNum(cr,'events roi gy','actual spend',b2));
+  const budAll=[...(budDataTT.some(v=>v!=null)?budDataTT:[]),...(budDataGY.some(v=>v!=null)?budDataGY:[])];
+  const labelsForBudget=budDataTT.some(v=>v!=null)&&budDataGY.some(v=>v!=null)
+    ?[...bLabels.map(l=>l+' (TT)'),...bLabels.map(l=>l+' (GY)')]
+    :bLabels;
+  const actAll=[...(actDataTT.some(v=>v!=null)?actDataTT:[]),...(actDataGY.some(v=>v!=null)?actDataGY:[])];
+  const ctxBudget=document.getElementById('ch-ov-budget');
+  if(ctxBudget&&(budAll.some(v=>v!=null)||actAll.some(v=>v!=null))){
+    barChart('ch-ov-budget',labelsForBudget,[
+      {label:'Budget',data:budAll,backgroundColor:'#1A2E4266',borderRadius:6},
+      {label:'Actual',data:actAll,backgroundColor:'#E8A020BB',borderRadius:6},
+    ],{currency:true,co:{plugins:{legend:{display:true,labels:{font:{size:10},boxWidth:10}}}}});
+  } else if(ctxBudget){
+    ctxBudget.parentElement.innerHTML='<div class="empty-state" style="padding:40px 0">No budget data</div>';
+  }
+}
+
+/* ════════════════════════════════════════════════
+   PIPELINE TAB
+════════════════════════════════════════════════ */
+function renderPipelineTab(cr,pr,notes){
+  const cat='pipeline impact',catN=normCat(cat);
+  const b=S.brand==='all'?'group':S.brand;
+  const kpis=[
+    {label:'Campaigns Launched',met:'campaigns launched',icon:'📣',col:'#3B7DD8'},
+    {label:'Leads Generated',   met:'leads generated',  icon:'🎯',col:'#E8A020'},
+    {label:'Conversion Rate',   met:'conversion rate',  icon:'↗',col:'#1B7A6E'},
+    {label:'Total Ad Spend',    met:'total ad spend',   icon:'💰',col:'#344A60'},
+    {label:'Cost per Click',    met:'cost per click',   icon:'🖱',col:'#6B5CE7'},
+    {label:'Cost per Lead',     met:'cost per lead',    icon:'📊',col:'#E05A4B'},
+  ];
+  let c,p;
+  document.getElementById('kpi-pipeline').innerHTML=kpis.map(k=>{
+    c=getNum(cr,cat,k.met,b); p=pr.length?getNum(pr,cat,k.met,b):null;
+    if(c==null&&b!=='group'){c=getNum(cr,cat,k.met,'group');p=pr.length?getNum(pr,cat,k.met,'group'):null;}
+    return kpiCard(k.label,c,p,k.met,k.icon,k.col);
+  }).join('');
+
+  // Charts
+  const brands=[...new Set(cr.filter(r=>r.category===catN&&r.brand!=='group').map(r=>r.brand))];
+  const dispB=S.brand!=='all'?brands.filter(b2=>b2===S.brand):brands;
+  const bL=dispB.map(b2=>b2.charAt(0).toUpperCase()+b2.slice(1));
+  const lData=dispB.map(b2=>getNum(cr,cat,'leads generated',b2));
+  const sData=dispB.map(b2=>getNum(cr,cat,'total ad spend',b2));
+  const lpData=pr.length?dispB.map(b2=>getNum(pr,cat,'leads generated',b2)):[];
+  if(lData.some(v=>v!=null)){
+    const ds=[{label:'Current',data:lData,backgroundColor:'#E8A02099',borderRadius:6}];
+    if(lpData.some(v=>v!=null))ds.push({label:'Prev',data:lpData,backgroundColor:'#1B7A6E55',borderRadius:6});
+    barChart('ch-pl-leads',bL,ds,{co:{plugins:{legend:{display:ds.length>1,labels:{font:{size:10},boxWidth:10}}}}});
+  }
+  if(sData.some(v=>v!=null))barChart('ch-pl-spend',bL,[{label:'Ad Spend',data:sData,backgroundColor:'#3B7DD899',borderRadius:6}],{currency:true});
+  document.getElementById('tbl-pipeline').innerHTML=brandTbl(cr,pr,cat,['Campaigns Launched','Leads Generated','Conversion Rate (%)','Total Ad Spend','Cost per Click','Cost per Lead']);
+  document.getElementById('notes-pipeline').innerHTML=notesHtml(notes,cat);
+}
+
+/* ════════════════════════════════════════════════
+   MARKET TAB
+════════════════════════════════════════════════ */
+function renderMarketTab(cr,pr,notes){
+  const cat='market growth and visibility',catN=normCat(cat);
+  const b=S.brand==='all'?'group':S.brand;
+  const kpis=[
+    {label:'Follower Growth',    met:'follower growth',             icon:'📈',col:'#1B7A6E'},
+    {label:'Media Mentions',     met:'media mentions',              icon:'📰',col:'#6B5CE7'},
+    {label:'Engagement Rate',    met:'engagement rate',             icon:'❤',col:'#E05A4B'},
+    {label:'Thought Leadership', met:'thought leadership published',icon:'✍',col:'#3B7DD8'},
+    {label:'Speaking Engagements',met:'speaking engagements',      icon:'🎤',col:'#E8A020'},
+    {label:'Strategic Partnerships',met:'strategic partnerships',  icon:'🤝',col:'#344A60'},
+  ];
+  document.getElementById('kpi-market').innerHTML=kpis.map(k=>{
+    let c=getNum(cr,cat,k.met,b),p=pr.length?getNum(pr,cat,k.met,b):null;
+    if(c==null&&b!=='group'){c=getNum(cr,cat,k.met,'group');p=pr.length?getNum(pr,cat,k.met,'group'):null;}
+    return kpiCard(k.label,c,p,k.met,k.icon,k.col);
+  }).join('');
+  const brands=[...new Set(cr.filter(r=>r.category===normCat(cat)&&r.brand!=='group').map(r=>r.brand))];
+  const dispB=S.brand!=='all'?brands.filter(b2=>b2===S.brand):brands;
+  const bL=dispB.map(b2=>b2.charAt(0).toUpperCase()+b2.slice(1));
+  const fData=dispB.map(b2=>getNum(cr,cat,'follower growth',b2));
+  const fpData=pr.length?dispB.map(b2=>getNum(pr,cat,'follower growth',b2)):[];
+  const eData=dispB.map(b2=>{const n=getNum(cr,cat,'engagement rate',b2);return n!=null?n*100:null;});
+  if(fData.some(v=>v!=null)){
+    const ds=[{label:'Current',data:fData,backgroundColor:'#1B7A6E99',borderRadius:6}];
+    if(fpData.some(v=>v!=null))ds.push({label:'Prev',data:fpData,backgroundColor:'#1B7A6E33',borderRadius:6});
+    barChart('ch-mkt-foll',bL,ds,{co:{plugins:{legend:{display:ds.length>1,labels:{font:{size:10},boxWidth:10}}}}});
+  }
+  if(eData.some(v=>v!=null))barChart('ch-mkt-eng',bL,[{label:'Engagement %',data:eData,backgroundColor:'#E8A02088',borderRadius:6}]);
+  document.getElementById('tbl-market').innerHTML=brandTbl(cr,pr,cat,['Follower Growth','Engagement Rate (%)','Media Mentions','Thought Leadership Published','Speaking Engagements','Strategic Partnerships']);
+  document.getElementById('notes-market').innerHTML=notesHtml(notes,cat);
+}
+
+/* ════════════════════════════════════════════════
+   REPUTATION TAB
+════════════════════════════════════════════════ */
+function renderReputationTab(cr,pr,notes){
+  const el=document.getElementById('reputation-content');
+  const cat='reputation and risk';
+  const crisis=getGS(cr,cat,'crisis incidents managed');
+  const execFt=getGS(cr,cat,'executive panels features');
+  const prevCrisis=pr.length?getGS(pr,cat,'crisis incidents managed'):null;
+  const prevExec=pr.length?getGS(pr,cat,'executive panels features'):null;
+
+  const riskClass=crisis==null?'risk-na':crisis===0?'risk-ok':'risk-warn';
+  const riskText=crisis==null?'No data available':crisis===0?'✓ No Active Crisis Incidents':`⚠ ${crisis} Crisis Incident${crisis>1?'s':''} — See notes`;
+
+  let h=`<div class="risk-indicator ${riskClass}"><span class="risk-label">${esc(riskText)}</span></div>`;
+
+  // KPI row
+  h+=`<div class="grid-auto-sm" style="margin-bottom:18px">
+    ${kpiCard('Crisis Incidents',crisis,prevCrisis,'crisis incidents managed','🚨','#E05A4B')}
+    ${kpiCard('Negative Mentions Mitigated',getGS(cr,cat,'negative mentions mitigated'),null,'negative mentions mitigated','🛡','#6B5CE7')}
+    ${execFt!=null?kpiCard('Executive Panels / Features',execFt,prevExec,'executive panels features','🏆','#E8A020'):''}
+    ${kpiCard('Compliance Comms Issued',getGS(cr,cat,'compliance comms issued'),null,'compliance comms issued','📋','#344A60')}
+  </div>`;
+
+  // Sentiment
+  const sentRecs=cr.filter(r=>r.category===normCat(cat)&&r.metric===normMet('sentiment score')&&r.brand!=='group'&&r.value);
+  if(sentRecs.length){
+    h+=`<div class="sec-hdr" style="margin-top:0"><div class="sec-title"><span class="sec-title-tag"></span>Sentiment This Period</div></div>
+    <div class="sentiment-grid" style="margin-bottom:16px">
+      ${sentRecs.map(r=>`<div class="sentiment-item"><div class="sentiment-brand">${esc(r.brand)}</div><div class="sentiment-val">${esc(String(r.value))}</div></div>`).join('')}
+    </div>`;
+  }
+
+  h+=`<div class="sec-hdr"><div class="sec-title"><span class="sec-title-tag"></span>Brand Breakdown</div></div>
+  <div class="card card-p">${brandTbl(cr,pr,cat,['Crisis Incidents Managed','Severity','Negative Mentions Mitigated','Holding Statement Issued','Executive Panels Features','Compliance Comms Issued'])}</div>`;
+  h+=notesHtml(notes,cat);
+  el.innerHTML=h;
+}
+
+/* ════════════════════════════════════════════════
+   EVENTS TAB (TT and GY)
+════════════════════════════════════════════════ */
+function renderEventsTab(cat,territory,cr,pr,notes,cntId){
+  const el=document.getElementById(cntId);
+  const catN=normCat(cat);
+  const inProg=getGS(cr,cat,'events in progress');
+  const executed=getGS(cr,cat,'events executed');
+  const budAlloc=getGS(cr,cat,'budget allocated');
+  const actSpend=getGS(cr,cat,'actual spend');
+  const vendOwed=getGS(cr,cat,'vendors owed');
+  const vendPaid=getGS(cr,cat,'vendors paid');
+  const feedback=getGS(cr,cat,'avg feedback score');
+  const prevExec=pr.length?getGS(pr,cat,'events executed'):null;
+  const prevBudg=pr.length?getGS(pr,cat,'budget allocated'):null;
+  const prevAct=pr.length?getGS(pr,cat,'actual spend'):null;
+
+  if([inProg,executed,budAlloc,actSpend].every(v=>v==null)){
+    el.innerHTML=`<div class="empty-state"><div class="empty-icon">📅</div><div class="empty-msg">No Events ROI data for ${territory} this period.</div></div>`;
+    return;
+  }
+
+  const variance=(budAlloc&&actSpend&&budAlloc>0)?((budAlloc-actSpend)/budAlloc*100):null;
+  let h=`<div class="grid-auto-sm" style="margin-bottom:18px">
+    ${inProg!=null?kpiCard('In Progress',inProg,null,'events in progress','🔄','#344A60'):''}
+    ${executed!=null?kpiCard('Executed',executed,prevExec,'events executed','✅','#1B7A6E'):''}
+    ${budAlloc!=null?kpiCard('Budget Allocated',budAlloc,prevBudg,'budget allocated','💰','#3B7DD8'):''}
+    ${actSpend!=null?kpiCard('Actual Spend',actSpend,prevAct,'actual spend','💳','#E8A020'):''}
+    ${variance!=null?`<div class="kpi-card"><div class="kpi-accent-bar" style="background:${variance>=0?'#1B7A6E':'#E05A4B'}"></div><div class="kpi-icon-wrap" style="background:${variance>=0?'#E0F4F1':'#FDECEA'}">${variance>=0?'✓':'!'}</div><div class="kpi-label">Budget Variance</div><div style="margin-top:6px">${variance>=0?`<span class="badge b-green">↓ ${variance.toFixed(1)}% under budget</span>`:`<span class="badge b-red">↑ ${Math.abs(variance).toFixed(1)}% over budget</span>`}</div></div>`:''}
+    ${feedback!=null?kpiCard('Avg Feedback Score',feedback,null,'avg feedback score','⭐','#E8A020'):''}
+  </div>`;
+
+  // Vendor status
+  if(vendOwed!=null||vendPaid!=null){
+    h+=`<div class="vendor-row">
+      ${vendPaid!=null?`<div class="vendor-card"><div class="vendor-card-label">Vendors Paid</div><div class="vendor-card-value">${vendPaid}</div></div>`:''}
+      ${vendOwed!=null?`<div class="vendor-card ${vendOwed>0?'outstanding':''}"><div class="vendor-card-label">Vendors Outstanding${vendOwed>0?' ⚠':''}</div><div class="vendor-card-value">${vendOwed}</div>${vendOwed>0?'<div style="font-size:10px;color:var(--amber-dark);margin-top:4px;font-weight:600">Payment pending</div>':''}</div>`:''}
+    </div>`;
+  }
+
+  // Budget chart
+  const brands=[...new Set(cr.filter(r=>r.category===catN&&r.brand!=='group').map(r=>r.brand))];
+  const dispB=S.brand!=='all'?brands.filter(b=>b===S.brand):brands;
+  const bL=dispB.map(b=>b.charAt(0).toUpperCase()+b.slice(1));
+  const budD=dispB.map(b=>getNum(cr,cat,'budget allocated',b));
+  const actD=dispB.map(b=>getNum(cr,cat,'actual spend',b));
+  const hasBudget=budD.some(v=>v!=null)||actD.some(v=>v!=null);
+  const chartId=`ch-ev-${territory}`;
+
+  h+=`<div class="grid-2">
+    <div class="card card-p"><div class="sec-hdr" style="margin-top:0;margin-bottom:12px"><div class="sec-title" style="font-size:12px">Brand Breakdown</div></div>${brandTbl(cr,pr,cat,['Events In Progress','Events Executed','Budget Allocated','Actual Spend','Vendors Owed','Vendors Paid'])}</div>
+    ${hasBudget?`<div class="chart-card"><div class="chart-card-title">Budget vs Actual — ${territory}</div><div class="chart-h chart-h-220"><canvas id="${chartId}"></canvas></div></div>`:'<div></div>'}
+  </div>`;
+  h+=notesHtml(notes,cat);
+  el.innerHTML=h;
+
+  if(hasBudget){
+    barChart(chartId,bL,[
+      {label:'Budget',data:budD,backgroundColor:'#1A2E4266',borderRadius:6},
+      {label:'Actual',data:actD,backgroundColor:'#E8A020BB',borderRadius:6},
+    ],{currency:true,co:{plugins:{legend:{display:true,labels:{font:{size:10},boxWidth:10}}}}});
+  }
+}
+
+/* ════════════════════════════════════════════════
+   CREATIVE TAB
+════════════════════════════════════════════════ */
+function renderCreativeTab(cr,pr,notes){
+  const cat='creative and visual media';
+  const vidRel=getGS(cr,cat,'videos released');
+  const cntGfx=getGS(cr,cat,'content graphics submitted');
+  const prjGfx=getGS(cr,cat,'projects graphics submitted');
+  const shares=getGS(cr,cat,'shares');
+  const profInf=getGS(cr,cat,'profit influenced');
+  const revInf=getGS(cr,cat,'revenue influenced');
+  const turn=getGS(cr,cat,'turnaround time hrs');
+  const cntInt=getGS(cr,cat,'content internal use');
+  const prevVid=pr.length?getGS(pr,cat,'videos released'):null;
+  const prevGfx=pr.length?getGS(pr,cat,'content graphics submitted'):null;
+
+  document.getElementById('kpi-creative').innerHTML=[
+    vidRel!=null?kpiCard('Videos Released',vidRel,prevVid,'videos released','🎬','#1B7A6E'):'',
+    cntGfx!=null?kpiCard('Content Graphics',cntGfx,prevGfx,'content graphics submitted','🎨','#3B7DD8'):'',
+    prjGfx!=null?kpiCard('Project Graphics',prjGfx,null,'projects graphics submitted','🖼','#6B5CE7'):'',
+    cntInt!=null?kpiCard('Internal Content',cntInt,null,'content internal use','📁','#E05A4B'):'',
+    shares!=null?kpiCard('Shares',shares,null,'shares','🔗','#E8A020'):'',
+    turn!=null?kpiCard('Turnaround (hrs)',turn,null,'turnaround time hrs','⏱','#344A60'):'',
+  ].join('');
+
+  // Value influenced panel
+  let valHtml='';
+  if(profInf!=null||revInf!=null){
+    valHtml=`<div class="chart-card"><div class="chart-card-title">Value Influenced</div>
+      ${profInf!=null?`<div class="kpi-card" style="margin-bottom:12px;box-shadow:none;border-color:var(--border)"><div class="kpi-accent-bar" style="background:#E8A020"></div><div class="kpi-label">Profit Influenced</div><div class="kpi-value" style="font-size:22px">${esc(fmtVal(profInf,'profit influenced'))}</div><div class="kpi-meta"><span class="badge b-amber" style="font-size:9px">Separate from Revenue Influenced</span></div></div>`:''}
+      ${revInf!=null?`<div class="kpi-card" style="box-shadow:none;border-color:var(--border)"><div class="kpi-accent-bar" style="background:#1B7A6E"></div><div class="kpi-label">Revenue Influenced</div><div class="kpi-value" style="font-size:22px">${esc(fmtVal(revInf,'revenue influenced'))}</div></div>`:''}
+    </div>`;
+  }
+  document.getElementById('creative-value-panel').innerHTML=valHtml;
+
+  // Donut chart
+  const outTypes=[],outVals=[];
+  if(vidRel!=null){outTypes.push('Videos');outVals.push(vidRel);}
+  if(cntGfx!=null){outTypes.push('Content Gfx');outVals.push(cntGfx);}
+  if(prjGfx!=null){outTypes.push('Project Gfx');outVals.push(prjGfx);}
+  if(cntInt!=null){outTypes.push('Internal');outVals.push(cntInt);}
+  if(outTypes.length){
+    const ctx=document.getElementById('ch-cr-out');
+    if(ctx)S.charts['ch-cr-out']=new Chart(ctx.getContext('2d'),{
+      type:'doughnut',
+      data:{labels:outTypes,datasets:[{data:outVals,backgroundColor:['#1B7A6E','#E8A020','#3B7DD8','#6B5CE7'],borderWidth:3,borderColor:'#fff'}]},
+      options:{responsive:true,maintainAspectRatio:false,cutout:'65%',plugins:{legend:{position:'bottom',labels:{font:{size:10},padding:12,boxWidth:10}}}}
+    });
+  }
+
+  document.getElementById('tbl-creative').innerHTML=brandTbl(cr,pr,cat,['Videos Released','Content - Internal Use','Content Graphics Submitted','Projects Graphics Submitted','Shares']);
+  document.getElementById('notes-creative').innerHTML=notesHtml(notes,cat);
+}
+
+/* ════════════════════════════════════════════════
+   BD / SPONSORSHIPS / INTERNAL TABS
+════════════════════════════════════════════════ */
+function renderSponsorshipsTab(cr,pr,notes){
+  const el=document.getElementById('content-sponsorships');
+  const cat='sponsorships';
+  const recs=cr.filter(r=>r.category===normCat(cat));
+  if(!recs.length){el.innerHTML=`<div class="empty-state"><div class="empty-icon">⭐</div><div class="empty-msg">No Sponsorships data yet.</div></div>`;return;}
+  const projEx=getGS(cr,cat,'projects executed'),budAll=getGS(cr,cat,'budget allocated'),actSp=getGS(cr,cat,'actual spend'),vols=getGS(cr,cat,'volunteers');
+  el.innerHTML=`<div class="grid-auto-sm" style="margin-bottom:18px">
+    ${projEx!=null?kpiCard('Projects Executed',projEx,null,'projects executed','✅','#1B7A6E'):''}
+    ${budAll!=null?kpiCard('Budget Allocated',budAll,null,'budget allocated','💰','#344A60'):''}
+    ${actSp!=null?kpiCard('Actual Spend',actSp,null,'actual spend','💳','#E8A020'):''}
+    ${vols!=null?kpiCard('Volunteers',vols,null,'volunteers','🙋','#6B5CE7'):''}
+  </div><div class="card card-p">${brandTbl(cr,pr,cat,['Projects In Progress','Projects Executed','Budget Allocated','Actual Spend','# of Volunteers'])}</div>`+notesHtml(notes,cat);
+}
+
+function renderInternalTab(cr,pr,notes){
+  const el=document.getElementById('content-internal');
+  const cat='internal engagements';
+  const recs=cr.filter(r=>r.category===normCat(cat));
+  if(!recs.length){el.innerHTML=`<div class="empty-state"><div class="empty-icon">👥</div><div class="empty-msg">No Internal Engagements data yet.</div></div>`;return;}
+  const evEx=getGS(cr,cat,'events executed'),budAll=getGS(cr,cat,'budget allocated'),actSp=getGS(cr,cat,'actual spend');
+  const attB=getGS(cr,cat,'attendees budgeted'),attA=getGS(cr,cat,'attendees actual'),fb=getGS(cr,cat,'avg feedback score');
+  let h=`<div class="grid-auto-sm" style="margin-bottom:18px">
+    ${evEx!=null?kpiCard('Events Executed',evEx,null,'events executed','✅','#1B7A6E'):''}
+    ${budAll!=null?kpiCard('Budget Allocated',budAll,null,'budget allocated','💰','#344A60'):''}
+    ${actSp!=null?kpiCard('Actual Spend',actSp,null,'actual spend','💳','#E8A020'):''}
+    ${attB!=null?kpiCard('Attendees Budgeted',attB,null,'attendees budgeted','👤','#3B7DD8'):''}
+    ${attA!=null?kpiCard('Attendees Actual',attA,null,'attendees actual','👥','#1B7A6E'):''}
+    ${fb!=null?kpiCard('Avg Feedback Score',fb,null,'avg feedback score','⭐','#E8A020'):''}
+  </div>`;
+  if(attB!=null&&attA!=null){
+    h+=`<div class="chart-card" style="max-width:380px;margin-bottom:16px"><div class="chart-card-title">Planned vs Actual Attendance</div><div class="chart-h" style="height:160px"><canvas id="ch-int-att"></canvas></div></div>`;
+  }
+  h+=`<div class="card card-p">${brandTbl(cr,pr,cat,['Events In Progress','Events Executed','Budget Allocated','Actual Spend','Attendees Budgeted','Attendees Actual','Avg. Feedback Score (1-5)'])}</div>`;
+  h+=notesHtml(notes,cat);
+  el.innerHTML=h;
+  if(attB!=null&&attA!=null){
+    const ctx=document.getElementById('ch-int-att');
+    if(ctx)S.charts['ch-int-att']=new Chart(ctx.getContext('2d'),{
+      type:'bar',data:{labels:['Attendance'],datasets:[{label:'Budgeted',data:[attB],backgroundColor:'#1A2E4266',borderRadius:6},{label:'Actual',data:[attA],backgroundColor:'#1B7A6EBB',borderRadius:6}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{font:{size:10},boxWidth:10}}},scales:{x:{grid:{display:false}},y:{beginAtZero:true,grid:{color:'#F0F4F9'}}}}
+    });
+  }
+}
+
+/* ════════════════════════════════════════════════
+   OPS TABLE (Tab 11)
+════════════════════════════════════════════════ */
+let _opsAll=[],_opsSort={col:0,dir:1};
+
+function renderOpsTable(cr,pr){
+  const catSet=new Set(),brandSet=new Set();
+  _opsAll=[];
+  const allNotes=S.sheets[S.sel]?.notes||[];
+  for(const rec of cr){
+    if(isNoteRow(rec.metric))continue;
+    const prev=pr.find(r=>r.category===rec.category&&r.metric===rec.metric&&r.brand===rec.brand);
+    const note=allNotes.find(n=>n.category===rec.category&&n.brand===rec.brand);
+    catSet.add(rec.category);brandSet.add(rec.brand);
+    _opsAll.push({cat:rec.category,met:rec.metricRaw||rec.metric,brand:rec.brand,
+      curV:rec.value,curN:rec.valueNum,prevV:prev?.value??null,prevN:prev?.valueNum??null,
+      delta:rec.valueNum!=null&&prev?.valueNum!=null?rec.valueNum-prev.valueNum:null,note:note?.text||''});
+  }
+  const cSel=document.getElementById('opsCatFil');
+  cSel.innerHTML='<option value="">All Categories</option>'+[...catSet].sort().map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join('');
+  const bSel=document.getElementById('opsBrandFil');
+  bSel.innerHTML='<option value="">All Brands</option>'+[...brandSet].sort().map(b=>`<option value="${esc(b)}">${esc(b.charAt(0).toUpperCase()+b.slice(1))}</option>`).join('');
+  drawOps(_opsAll);
+}
+
+function filterOps(){
+  const q=document.getElementById('opsSearch').value.toLowerCase();
+  const cat=document.getElementById('opsCatFil').value;
+  const br=document.getElementById('opsBrandFil').value;
+  drawOps(_opsAll.filter(r=>{
+    if(cat&&r.cat!==cat)return false;
+    if(br&&r.brand!==br)return false;
+    if(q&&![r.cat,r.met,r.brand,r.curV,r.note].join(' ').toLowerCase().includes(q))return false;
+    return true;
+  }));
+}
+
+function drawOps(data){
+  const tb=document.getElementById('opsTbody');
+  if(!data.length){tb.innerHTML='<tr><td colspan="8" class="empty-state">No matching records.</td></tr>';return;}
+  tb.innerHTML=data.map(r=>{
+    const delta=r.delta!=null?fmtDelta(r.curN,r.prevN,r.met):'<span class="badge b-gray">—</span>';
+    const status=r.delta==null?'<span class="badge b-gray">No comparison</span>':r.delta>0?'<span class="badge b-green">↑ Up</span>':r.delta<0?'<span class="badge b-red">↓ Down</span>':'<span class="badge b-gray">→ Same</span>';
+    return`<tr><td><span class="badge b-navy" style="font-size:9px">${esc(r.cat)}</span></td><td>${esc(r.met)}</td><td><span class="brand-pill">${esc(r.brand)}</span></td><td>${r.curV!=null?esc(fmtVal(r.curN??r.curV,r.met)):'<span style="color:var(--text-m)">—</span>'}</td><td>${r.prevV!=null?esc(fmtVal(r.prevN??r.prevV,r.met)):'<span style="color:var(--text-m)">—</span>'}</td><td>${delta}</td><td>${status}</td><td class="td-note">${r.note?esc(r.note.slice(0,100))+(r.note.length>100?'…':''):''}</td></tr>`;
+  }).join('');
+}
+
+function sortOps(col){
+  if(_opsSort.col===col)_opsSort.dir*=-1;else{_opsSort.col=col;_opsSort.dir=1;}
+  const keys=['cat','met','brand','curN','prevN','delta'];
+  const k=keys[col];
+  drawOps([..._opsAll].sort((a,b)=>{const av=a[k]??'',bv=b[k]??'';return(av<bv?-1:av>bv?1:0)*_opsSort.dir;}));
+}
+
+/* ════════════════════════════════════════════════
+   UTILS
+════════════════════════════════════════════════ */
+function resetFilters(){
+  S.brand='all';
+  document.getElementById('brandSel').value='all';
+  render();
+}
+function showErr(msg){
+  const el=document.getElementById('errorBanner');
+  el.innerHTML=`<div class="err-banner"><span style="font-weight:700;flex-shrink:0">✕</span><span>${esc(msg)}</span></div>`;
+  el.style.display='block';
+}
+function clearErr(){
+  const el=document.getElementById('errorBanner');
+  el.style.display='none';el.innerHTML='';
+}
+
+
+/* ── INIT: load stored periods on page open ── */
+document.addEventListener('DOMContentLoaded', () => { loadFromDB(); });
+</script>
+</body>
+</html>
