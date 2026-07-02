@@ -1,0 +1,2595 @@
+{
+  "schemaVersion": 2,
+  "lastPublished": "02 Jul 2026, 04:42 pm",
+  "lastPublishedISO": "2026-07-02T20:42:42.745Z",
+  "totalPeriods": 1,
+  "latestPeriod": "May 9 - May 22 ",
+  "sourceSummary": [
+    "Communications_Fortnightly_Report (7).xlsx"
+  ],
+  "periods": {
+    "May 9 - May 22 ": {
+      "parsed": {
+        "records": [
+          {
+            "category": "pipeline impact",
+            "metric": "campaigns launched",
+            "metricRaw": "Campaigns Launched",
+            "brand": "group",
+            "value": "4",
+            "valueNum": 4
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "campaigns launched",
+            "metricRaw": "Campaigns Launched",
+            "brand": "ramps",
+            "value": "2",
+            "valueNum": 2
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "campaigns launched",
+            "metricRaw": "Campaigns Launched",
+            "brand": "edo",
+            "value": "1",
+            "valueNum": 1
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "campaigns launched",
+            "metricRaw": "Campaigns Launched",
+            "brand": "cubby cargo",
+            "value": "1",
+            "valueNum": 1
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "campaigns launched",
+            "metricRaw": "Campaigns Launched",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "campaigns launched",
+            "metricRaw": "Campaigns Launched",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "leads generated",
+            "metricRaw": "Leads Generated",
+            "brand": "group",
+            "value": "12096",
+            "valueNum": 12096
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "leads generated",
+            "metricRaw": "Leads Generated",
+            "brand": "ramps",
+            "value": "9400",
+            "valueNum": 9400
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "leads generated",
+            "metricRaw": "Leads Generated",
+            "brand": "edo",
+            "value": "1996",
+            "valueNum": 1996
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "leads generated",
+            "metricRaw": "Leads Generated",
+            "brand": "cubby cargo",
+            "value": "673",
+            "valueNum": 673
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "leads generated",
+            "metricRaw": "Leads Generated",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "leads generated",
+            "metricRaw": "Leads Generated",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "conversion rate",
+            "metricRaw": "Conversion Rate (%)",
+            "brand": "group",
+            "value": "0.6016",
+            "valueNum": 0.6016
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "conversion rate",
+            "metricRaw": "Conversion Rate (%)",
+            "brand": "ramps",
+            "value": "1.6786",
+            "valueNum": 1.6786
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "conversion rate",
+            "metricRaw": "Conversion Rate (%)",
+            "brand": "edo",
+            "value": "0.1468",
+            "valueNum": 0.1468
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "conversion rate",
+            "metricRaw": "Conversion Rate (%)",
+            "brand": "cubby cargo",
+            "value": "0.7826",
+            "valueNum": 0.7826
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "conversion rate",
+            "metricRaw": "Conversion Rate (%)",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "conversion rate",
+            "metricRaw": "Conversion Rate (%)",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "total ad spend",
+            "metricRaw": "Total Ad Spend",
+            "brand": "group",
+            "value": "636",
+            "valueNum": 636
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "total ad spend",
+            "metricRaw": "Total Ad Spend",
+            "brand": "ramps",
+            "value": "453",
+            "valueNum": 453
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "total ad spend",
+            "metricRaw": "Total Ad Spend",
+            "brand": "edo",
+            "value": "123",
+            "valueNum": 123
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "total ad spend",
+            "metricRaw": "Total Ad Spend",
+            "brand": "cubby cargo",
+            "value": "60",
+            "valueNum": 60
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "total ad spend",
+            "metricRaw": "Total Ad Spend",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "total ad spend",
+            "metricRaw": "Total Ad Spend",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "cost per click",
+            "metricRaw": "Cost per Click",
+            "brand": "group",
+            "value": "0.05",
+            "valueNum": 0.05
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "cost per click",
+            "metricRaw": "Cost per Click",
+            "brand": "ramps",
+            "value": "0.05",
+            "valueNum": 0.05
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "cost per click",
+            "metricRaw": "Cost per Click",
+            "brand": "edo",
+            "value": "0.06",
+            "valueNum": 0.06
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "cost per click",
+            "metricRaw": "Cost per Click",
+            "brand": "cubby cargo",
+            "value": "0.09",
+            "valueNum": 0.09
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "cost per click",
+            "metricRaw": "Cost per Click",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "cost per click",
+            "metricRaw": "Cost per Click",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "cost per lead",
+            "metricRaw": "Cost per Lead",
+            "brand": "group",
+            "value": "0.05",
+            "valueNum": 0.05
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "cost per lead",
+            "metricRaw": "Cost per Lead",
+            "brand": "ramps",
+            "value": "0.05",
+            "valueNum": 0.05
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "cost per lead",
+            "metricRaw": "Cost per Lead",
+            "brand": "edo",
+            "value": "0.06",
+            "valueNum": 0.06
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "cost per lead",
+            "metricRaw": "Cost per Lead",
+            "brand": "cubby cargo",
+            "value": "0.09",
+            "valueNum": 0.09
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "cost per lead",
+            "metricRaw": "Cost per Lead",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "cost per lead",
+            "metricRaw": "Cost per Lead",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "pipeline revenue influenced",
+            "metricRaw": "Pipeline Revenue Influenced",
+            "brand": "group",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "pipeline revenue influenced",
+            "metricRaw": "Pipeline Revenue Influenced",
+            "brand": "ramps",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "pipeline revenue influenced",
+            "metricRaw": "Pipeline Revenue Influenced",
+            "brand": "edo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "pipeline revenue influenced",
+            "metricRaw": "Pipeline Revenue Influenced",
+            "brand": "cubby cargo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "pipeline revenue influenced",
+            "metricRaw": "Pipeline Revenue Influenced",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "pipeline impact",
+            "metric": "pipeline revenue influenced",
+            "metricRaw": "Pipeline Revenue Influenced",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "follower growth",
+            "metricRaw": "Follower Growth",
+            "brand": "group",
+            "value": "1938",
+            "valueNum": 1938
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "follower growth",
+            "metricRaw": "Follower Growth",
+            "brand": "ramps",
+            "value": "694",
+            "valueNum": 694
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "follower growth",
+            "metricRaw": "Follower Growth",
+            "brand": "edo",
+            "value": "966",
+            "valueNum": 966
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "follower growth",
+            "metricRaw": "Follower Growth",
+            "brand": "cubby cargo",
+            "value": "278",
+            "valueNum": 278
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "follower growth",
+            "metricRaw": "Follower Growth",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "follower growth",
+            "metricRaw": "Follower Growth",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "engagement rate",
+            "metricRaw": "Engagement Rate (%)",
+            "brand": "group",
+            "value": "0.0086",
+            "valueNum": 0.0086
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "engagement rate",
+            "metricRaw": "Engagement Rate (%)",
+            "brand": "ramps",
+            "value": "0.0087",
+            "valueNum": 0.0087
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "engagement rate",
+            "metricRaw": "Engagement Rate (%)",
+            "brand": "edo",
+            "value": "0.0084",
+            "valueNum": 0.0084
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "engagement rate",
+            "metricRaw": "Engagement Rate (%)",
+            "brand": "cubby cargo",
+            "value": "0.0091",
+            "valueNum": 0.0091
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "engagement rate",
+            "metricRaw": "Engagement Rate (%)",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "engagement rate",
+            "metricRaw": "Engagement Rate (%)",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "thought leadership published",
+            "metricRaw": "Thought Leadership Published",
+            "brand": "group",
+            "value": "1",
+            "valueNum": 1
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "thought leadership published",
+            "metricRaw": "Thought Leadership Published",
+            "brand": "ramps",
+            "value": "1",
+            "valueNum": 1
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "thought leadership published",
+            "metricRaw": "Thought Leadership Published",
+            "brand": "edo",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "thought leadership published",
+            "metricRaw": "Thought Leadership Published",
+            "brand": "cubby cargo",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "thought leadership published",
+            "metricRaw": "Thought Leadership Published",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "thought leadership published",
+            "metricRaw": "Thought Leadership Published",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "media mentions",
+            "metricRaw": "Media Mentions",
+            "brand": "group",
+            "value": "160",
+            "valueNum": 160
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "media mentions",
+            "metricRaw": "Media Mentions",
+            "brand": "ramps",
+            "value": "95",
+            "valueNum": 95
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "media mentions",
+            "metricRaw": "Media Mentions",
+            "brand": "edo",
+            "value": "65",
+            "valueNum": 65
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "media mentions",
+            "metricRaw": "Media Mentions",
+            "brand": "cubby cargo",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "media mentions",
+            "metricRaw": "Media Mentions",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "media mentions",
+            "metricRaw": "Media Mentions",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "speaking engagements",
+            "metricRaw": "Speaking Engagements",
+            "brand": "group",
+            "value": "3",
+            "valueNum": 3
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "speaking engagements",
+            "metricRaw": "Speaking Engagements",
+            "brand": "ramps",
+            "value": "1",
+            "valueNum": 1
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "speaking engagements",
+            "metricRaw": "Speaking Engagements",
+            "brand": "edo",
+            "value": "2",
+            "valueNum": 2
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "speaking engagements",
+            "metricRaw": "Speaking Engagements",
+            "brand": "cubby cargo",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "speaking engagements",
+            "metricRaw": "Speaking Engagements",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "speaking engagements",
+            "metricRaw": "Speaking Engagements",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "strategic partnerships",
+            "metricRaw": "Strategic Partnerships",
+            "brand": "group",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "strategic partnerships",
+            "metricRaw": "Strategic Partnerships",
+            "brand": "ramps",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "strategic partnerships",
+            "metricRaw": "Strategic Partnerships",
+            "brand": "edo",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "strategic partnerships",
+            "metricRaw": "Strategic Partnerships",
+            "brand": "cubby cargo",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "strategic partnerships",
+            "metricRaw": "Strategic Partnerships",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "market growth and visibility",
+            "metric": "strategic partnerships",
+            "metricRaw": "Strategic Partnerships",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "crisis incidents managed",
+            "metricRaw": "Crisis Incidents Managed",
+            "brand": "group",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "crisis incidents managed",
+            "metricRaw": "Crisis Incidents Managed",
+            "brand": "ramps",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "crisis incidents managed",
+            "metricRaw": "Crisis Incidents Managed",
+            "brand": "edo",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "crisis incidents managed",
+            "metricRaw": "Crisis Incidents Managed",
+            "brand": "cubby cargo",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "crisis incidents managed",
+            "metricRaw": "Crisis Incidents Managed",
+            "brand": "mawi",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "crisis incidents managed",
+            "metricRaw": "Crisis Incidents Managed",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "severity",
+            "metricRaw": "Severity (Low/Medium/High)",
+            "brand": "group",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "severity",
+            "metricRaw": "Severity (Low/Medium/High)",
+            "brand": "ramps",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "severity",
+            "metricRaw": "Severity (Low/Medium/High)",
+            "brand": "edo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "severity",
+            "metricRaw": "Severity (Low/Medium/High)",
+            "brand": "cubby cargo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "severity",
+            "metricRaw": "Severity (Low/Medium/High)",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "severity",
+            "metricRaw": "Severity (Low/Medium/High)",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "response time hrs",
+            "metricRaw": "Response Time (hrs)",
+            "brand": "group",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "response time hrs",
+            "metricRaw": "Response Time (hrs)",
+            "brand": "ramps",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "response time hrs",
+            "metricRaw": "Response Time (hrs)",
+            "brand": "edo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "response time hrs",
+            "metricRaw": "Response Time (hrs)",
+            "brand": "cubby cargo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "response time hrs",
+            "metricRaw": "Response Time (hrs)",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "response time hrs",
+            "metricRaw": "Response Time (hrs)",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "sentiment score",
+            "metricRaw": "Sentiment Score (% Pos/Neg)",
+            "brand": "group",
+            "value": "191% Pos 9 Neg",
+            "valueNum": 1.91
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "sentiment score",
+            "metricRaw": "Sentiment Score (% Pos/Neg)",
+            "brand": "ramps",
+            "value": "100% Pos",
+            "valueNum": 1
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "sentiment score",
+            "metricRaw": "Sentiment Score (% Pos/Neg)",
+            "brand": "edo",
+            "value": "100% Pos",
+            "valueNum": 1
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "sentiment score",
+            "metricRaw": "Sentiment Score (% Pos/Neg)",
+            "brand": "cubby cargo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "sentiment score",
+            "metricRaw": "Sentiment Score (% Pos/Neg)",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "sentiment score",
+            "metricRaw": "Sentiment Score (% Pos/Neg)",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "negative mentions mitigated",
+            "metricRaw": "Negative Mentions Mitigated",
+            "brand": "group",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "negative mentions mitigated",
+            "metricRaw": "Negative Mentions Mitigated",
+            "brand": "ramps",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "negative mentions mitigated",
+            "metricRaw": "Negative Mentions Mitigated",
+            "brand": "edo",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "negative mentions mitigated",
+            "metricRaw": "Negative Mentions Mitigated",
+            "brand": "cubby cargo",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "negative mentions mitigated",
+            "metricRaw": "Negative Mentions Mitigated",
+            "brand": "mawi",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "negative mentions mitigated",
+            "metricRaw": "Negative Mentions Mitigated",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "holding statement issued",
+            "metricRaw": "Holding Statement Issued (Y/N)",
+            "brand": "group",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "holding statement issued",
+            "metricRaw": "Holding Statement Issued (Y/N)",
+            "brand": "ramps",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "holding statement issued",
+            "metricRaw": "Holding Statement Issued (Y/N)",
+            "brand": "edo",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "holding statement issued",
+            "metricRaw": "Holding Statement Issued (Y/N)",
+            "brand": "cubby cargo",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "holding statement issued",
+            "metricRaw": "Holding Statement Issued (Y/N)",
+            "brand": "mawi",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "holding statement issued",
+            "metricRaw": "Holding Statement Issued (Y/N)",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "executive panels features",
+            "metricRaw": "Executive Panels/Features",
+            "brand": "group",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "executive panels features",
+            "metricRaw": "Executive Panels/Features",
+            "brand": "ramps",
+            "value": "1",
+            "valueNum": 1
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "executive panels features",
+            "metricRaw": "Executive Panels/Features",
+            "brand": "edo",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "executive panels features",
+            "metricRaw": "Executive Panels/Features",
+            "brand": "cubby cargo",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "executive panels features",
+            "metricRaw": "Executive Panels/Features",
+            "brand": "mawi",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "executive panels features",
+            "metricRaw": "Executive Panels/Features",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "compliance comms issued",
+            "metricRaw": "Compliance Comms Issued",
+            "brand": "group",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "compliance comms issued",
+            "metricRaw": "Compliance Comms Issued",
+            "brand": "ramps",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "compliance comms issued",
+            "metricRaw": "Compliance Comms Issued",
+            "brand": "edo",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "compliance comms issued",
+            "metricRaw": "Compliance Comms Issued",
+            "brand": "cubby cargo",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "compliance comms issued",
+            "metricRaw": "Compliance Comms Issued",
+            "brand": "mawi",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "reputation and risk",
+            "metric": "compliance comms issued",
+            "metricRaw": "Compliance Comms Issued",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi tt",
+            "metric": "events in progress",
+            "metricRaw": "Events In Progress",
+            "brand": "group",
+            "value": "4",
+            "valueNum": 4
+          },
+          {
+            "category": "events roi tt",
+            "metric": "events in progress",
+            "metricRaw": "Events In Progress",
+            "brand": "ramps",
+            "value": "2",
+            "valueNum": 2
+          },
+          {
+            "category": "events roi tt",
+            "metric": "events in progress",
+            "metricRaw": "Events In Progress",
+            "brand": "edo",
+            "value": "1",
+            "valueNum": 1
+          },
+          {
+            "category": "events roi tt",
+            "metric": "events in progress",
+            "metricRaw": "Events In Progress",
+            "brand": "cubby cargo",
+            "value": "1",
+            "valueNum": 1
+          },
+          {
+            "category": "events roi tt",
+            "metric": "events in progress",
+            "metricRaw": "Events In Progress",
+            "brand": "mawi",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi tt",
+            "metric": "events in progress",
+            "metricRaw": "Events In Progress",
+            "brand": "evolve",
+            "value": "1",
+            "valueNum": 1
+          },
+          {
+            "category": "events roi tt",
+            "metric": "events executed",
+            "metricRaw": "Events Executed",
+            "brand": "group",
+            "value": "1",
+            "valueNum": 1
+          },
+          {
+            "category": "events roi tt",
+            "metric": "events executed",
+            "metricRaw": "Events Executed",
+            "brand": "ramps",
+            "value": "1",
+            "valueNum": 1
+          },
+          {
+            "category": "events roi tt",
+            "metric": "events executed",
+            "metricRaw": "Events Executed",
+            "brand": "edo",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi tt",
+            "metric": "events executed",
+            "metricRaw": "Events Executed",
+            "brand": "cubby cargo",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi tt",
+            "metric": "events executed",
+            "metricRaw": "Events Executed",
+            "brand": "mawi",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi tt",
+            "metric": "events executed",
+            "metricRaw": "Events Executed",
+            "brand": "evolve",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi tt",
+            "metric": "budget allocated",
+            "metricRaw": "Budget Allocated",
+            "brand": "group",
+            "value": "45549.66",
+            "valueNum": 45549.66
+          },
+          {
+            "category": "events roi tt",
+            "metric": "budget allocated",
+            "metricRaw": "Budget Allocated",
+            "brand": "ramps",
+            "value": "45549.66",
+            "valueNum": 45549.66
+          },
+          {
+            "category": "events roi tt",
+            "metric": "budget allocated",
+            "metricRaw": "Budget Allocated",
+            "brand": "edo",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi tt",
+            "metric": "budget allocated",
+            "metricRaw": "Budget Allocated",
+            "brand": "cubby cargo",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi tt",
+            "metric": "budget allocated",
+            "metricRaw": "Budget Allocated",
+            "brand": "mawi",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi tt",
+            "metric": "budget allocated",
+            "metricRaw": "Budget Allocated",
+            "brand": "evolve",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi tt",
+            "metric": "actual spend",
+            "metricRaw": "Actual Spend",
+            "brand": "group",
+            "value": "45549.66",
+            "valueNum": 45549.66
+          },
+          {
+            "category": "events roi tt",
+            "metric": "actual spend",
+            "metricRaw": "Actual Spend",
+            "brand": "ramps",
+            "value": "45549.66",
+            "valueNum": 45549.66
+          },
+          {
+            "category": "events roi tt",
+            "metric": "actual spend",
+            "metricRaw": "Actual Spend",
+            "brand": "edo",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi tt",
+            "metric": "actual spend",
+            "metricRaw": "Actual Spend",
+            "brand": "cubby cargo",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi tt",
+            "metric": "actual spend",
+            "metricRaw": "Actual Spend",
+            "brand": "mawi",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi tt",
+            "metric": "actual spend",
+            "metricRaw": "Actual Spend",
+            "brand": "evolve",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi tt",
+            "metric": "budget variance",
+            "metricRaw": "Budget variance %",
+            "brand": "group",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi tt",
+            "metric": "budget variance",
+            "metricRaw": "Budget variance %",
+            "brand": "ramps",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi tt",
+            "metric": "budget variance",
+            "metricRaw": "Budget variance %",
+            "brand": "edo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi tt",
+            "metric": "budget variance",
+            "metricRaw": "Budget variance %",
+            "brand": "cubby cargo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi tt",
+            "metric": "budget variance",
+            "metricRaw": "Budget variance %",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi tt",
+            "metric": "budget variance",
+            "metricRaw": "Budget variance %",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi tt",
+            "metric": "leads generated",
+            "metricRaw": "Leads Generated",
+            "brand": "group",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi tt",
+            "metric": "leads generated",
+            "metricRaw": "Leads Generated",
+            "brand": "ramps",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi tt",
+            "metric": "leads generated",
+            "metricRaw": "Leads Generated",
+            "brand": "edo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi tt",
+            "metric": "leads generated",
+            "metricRaw": "Leads Generated",
+            "brand": "cubby cargo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi tt",
+            "metric": "leads generated",
+            "metricRaw": "Leads Generated",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi tt",
+            "metric": "leads generated",
+            "metricRaw": "Leads Generated",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi tt",
+            "metric": "revenue influenced",
+            "metricRaw": "Revenue Influenced",
+            "brand": "group",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi tt",
+            "metric": "revenue influenced",
+            "metricRaw": "Revenue Influenced",
+            "brand": "ramps",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi tt",
+            "metric": "revenue influenced",
+            "metricRaw": "Revenue Influenced",
+            "brand": "edo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi tt",
+            "metric": "revenue influenced",
+            "metricRaw": "Revenue Influenced",
+            "brand": "cubby cargo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi tt",
+            "metric": "revenue influenced",
+            "metricRaw": "Revenue Influenced",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi tt",
+            "metric": "revenue influenced",
+            "metricRaw": "Revenue Influenced",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi tt",
+            "metric": "vendors owed",
+            "metricRaw": "Vendors Owed",
+            "brand": "group",
+            "value": "2",
+            "valueNum": 2
+          },
+          {
+            "category": "events roi tt",
+            "metric": "vendors owed",
+            "metricRaw": "Vendors Owed",
+            "brand": "ramps",
+            "value": "3",
+            "valueNum": 3
+          },
+          {
+            "category": "events roi tt",
+            "metric": "vendors owed",
+            "metricRaw": "Vendors Owed",
+            "brand": "edo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi tt",
+            "metric": "vendors owed",
+            "metricRaw": "Vendors Owed",
+            "brand": "cubby cargo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi tt",
+            "metric": "vendors owed",
+            "metricRaw": "Vendors Owed",
+            "brand": "mawi",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi tt",
+            "metric": "vendors owed",
+            "metricRaw": "Vendors Owed",
+            "brand": "evolve",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi tt",
+            "metric": "vendors paid",
+            "metricRaw": "Vendors Paid",
+            "brand": "group",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi tt",
+            "metric": "vendors paid",
+            "metricRaw": "Vendors Paid",
+            "brand": "ramps",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi tt",
+            "metric": "vendors paid",
+            "metricRaw": "Vendors Paid",
+            "brand": "edo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi tt",
+            "metric": "vendors paid",
+            "metricRaw": "Vendors Paid",
+            "brand": "cubby cargo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi tt",
+            "metric": "vendors paid",
+            "metricRaw": "Vendors Paid",
+            "brand": "mawi",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi tt",
+            "metric": "vendors paid",
+            "metricRaw": "Vendors Paid",
+            "brand": "evolve",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi tt",
+            "metric": "avg feedback score",
+            "metricRaw": "Avg. Feedback Score (1-5)",
+            "brand": "group",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi tt",
+            "metric": "avg feedback score",
+            "metricRaw": "Avg. Feedback Score (1-5)",
+            "brand": "ramps",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi tt",
+            "metric": "avg feedback score",
+            "metricRaw": "Avg. Feedback Score (1-5)",
+            "brand": "edo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi tt",
+            "metric": "avg feedback score",
+            "metricRaw": "Avg. Feedback Score (1-5)",
+            "brand": "cubby cargo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi tt",
+            "metric": "avg feedback score",
+            "metricRaw": "Avg. Feedback Score (1-5)",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi tt",
+            "metric": "avg feedback score",
+            "metricRaw": "Avg. Feedback Score (1-5)",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi gy",
+            "metric": "events in progress",
+            "metricRaw": "Events In Progress",
+            "brand": "group",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi gy",
+            "metric": "events in progress",
+            "metricRaw": "Events In Progress",
+            "brand": "ramps",
+            "value": "1",
+            "valueNum": 1
+          },
+          {
+            "category": "events roi gy",
+            "metric": "events in progress",
+            "metricRaw": "Events In Progress",
+            "brand": "edo",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi gy",
+            "metric": "events in progress",
+            "metricRaw": "Events In Progress",
+            "brand": "cubby cargo",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi gy",
+            "metric": "events in progress",
+            "metricRaw": "Events In Progress",
+            "brand": "mawi",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi gy",
+            "metric": "events in progress",
+            "metricRaw": "Events In Progress",
+            "brand": "evolve",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi gy",
+            "metric": "events executed",
+            "metricRaw": "Events Executed",
+            "brand": "group",
+            "value": "1",
+            "valueNum": 1
+          },
+          {
+            "category": "events roi gy",
+            "metric": "events executed",
+            "metricRaw": "Events Executed",
+            "brand": "ramps",
+            "value": "1",
+            "valueNum": 1
+          },
+          {
+            "category": "events roi gy",
+            "metric": "events executed",
+            "metricRaw": "Events Executed",
+            "brand": "edo",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi gy",
+            "metric": "events executed",
+            "metricRaw": "Events Executed",
+            "brand": "cubby cargo",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi gy",
+            "metric": "events executed",
+            "metricRaw": "Events Executed",
+            "brand": "mawi",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi gy",
+            "metric": "events executed",
+            "metricRaw": "Events Executed",
+            "brand": "evolve",
+            "value": "1",
+            "valueNum": 1
+          },
+          {
+            "category": "events roi gy",
+            "metric": "budget allocated",
+            "metricRaw": "Budget Allocated",
+            "brand": "group",
+            "value": "1502",
+            "valueNum": 1502
+          },
+          {
+            "category": "events roi gy",
+            "metric": "budget allocated",
+            "metricRaw": "Budget Allocated",
+            "brand": "ramps",
+            "value": "1502",
+            "valueNum": 1502
+          },
+          {
+            "category": "events roi gy",
+            "metric": "budget allocated",
+            "metricRaw": "Budget Allocated",
+            "brand": "edo",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi gy",
+            "metric": "budget allocated",
+            "metricRaw": "Budget Allocated",
+            "brand": "cubby cargo",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi gy",
+            "metric": "budget allocated",
+            "metricRaw": "Budget Allocated",
+            "brand": "mawi",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi gy",
+            "metric": "budget allocated",
+            "metricRaw": "Budget Allocated",
+            "brand": "evolve",
+            "value": "13879.99",
+            "valueNum": 13879.99
+          },
+          {
+            "category": "events roi gy",
+            "metric": "actual spend",
+            "metricRaw": "Actual Spend",
+            "brand": "group",
+            "value": "843",
+            "valueNum": 843
+          },
+          {
+            "category": "events roi gy",
+            "metric": "actual spend",
+            "metricRaw": "Actual Spend",
+            "brand": "ramps",
+            "value": "843",
+            "valueNum": 843
+          },
+          {
+            "category": "events roi gy",
+            "metric": "actual spend",
+            "metricRaw": "Actual Spend",
+            "brand": "edo",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi gy",
+            "metric": "actual spend",
+            "metricRaw": "Actual Spend",
+            "brand": "cubby cargo",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi gy",
+            "metric": "actual spend",
+            "metricRaw": "Actual Spend",
+            "brand": "mawi",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi gy",
+            "metric": "actual spend",
+            "metricRaw": "Actual Spend",
+            "brand": "evolve",
+            "value": "13879.99",
+            "valueNum": 13879.99
+          },
+          {
+            "category": "events roi gy",
+            "metric": "budget variance",
+            "metricRaw": "Budget variance %",
+            "brand": "group",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi gy",
+            "metric": "budget variance",
+            "metricRaw": "Budget variance %",
+            "brand": "ramps",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi gy",
+            "metric": "budget variance",
+            "metricRaw": "Budget variance %",
+            "brand": "edo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi gy",
+            "metric": "budget variance",
+            "metricRaw": "Budget variance %",
+            "brand": "cubby cargo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi gy",
+            "metric": "budget variance",
+            "metricRaw": "Budget variance %",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi gy",
+            "metric": "budget variance",
+            "metricRaw": "Budget variance %",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi gy",
+            "metric": "leads generated",
+            "metricRaw": "Leads Generated",
+            "brand": "group",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi gy",
+            "metric": "leads generated",
+            "metricRaw": "Leads Generated",
+            "brand": "ramps",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi gy",
+            "metric": "leads generated",
+            "metricRaw": "Leads Generated",
+            "brand": "edo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi gy",
+            "metric": "leads generated",
+            "metricRaw": "Leads Generated",
+            "brand": "cubby cargo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi gy",
+            "metric": "leads generated",
+            "metricRaw": "Leads Generated",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi gy",
+            "metric": "leads generated",
+            "metricRaw": "Leads Generated",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi gy",
+            "metric": "revenue influenced",
+            "metricRaw": "Revenue Influenced",
+            "brand": "group",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi gy",
+            "metric": "revenue influenced",
+            "metricRaw": "Revenue Influenced",
+            "brand": "ramps",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi gy",
+            "metric": "revenue influenced",
+            "metricRaw": "Revenue Influenced",
+            "brand": "edo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi gy",
+            "metric": "revenue influenced",
+            "metricRaw": "Revenue Influenced",
+            "brand": "cubby cargo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi gy",
+            "metric": "revenue influenced",
+            "metricRaw": "Revenue Influenced",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi gy",
+            "metric": "revenue influenced",
+            "metricRaw": "Revenue Influenced",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi gy",
+            "metric": "vendors owed",
+            "metricRaw": "Vendors Owed",
+            "brand": "group",
+            "value": "1",
+            "valueNum": 1
+          },
+          {
+            "category": "events roi gy",
+            "metric": "vendors owed",
+            "metricRaw": "Vendors Owed",
+            "brand": "ramps",
+            "value": "1",
+            "valueNum": 1
+          },
+          {
+            "category": "events roi gy",
+            "metric": "vendors owed",
+            "metricRaw": "Vendors Owed",
+            "brand": "edo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi gy",
+            "metric": "vendors owed",
+            "metricRaw": "Vendors Owed",
+            "brand": "cubby cargo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi gy",
+            "metric": "vendors owed",
+            "metricRaw": "Vendors Owed",
+            "brand": "mawi",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi gy",
+            "metric": "vendors owed",
+            "metricRaw": "Vendors Owed",
+            "brand": "evolve",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi gy",
+            "metric": "vendors paid",
+            "metricRaw": "Vendors Paid",
+            "brand": "group",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi gy",
+            "metric": "vendors paid",
+            "metricRaw": "Vendors Paid",
+            "brand": "ramps",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi gy",
+            "metric": "vendors paid",
+            "metricRaw": "Vendors Paid",
+            "brand": "edo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi gy",
+            "metric": "vendors paid",
+            "metricRaw": "Vendors Paid",
+            "brand": "cubby cargo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi gy",
+            "metric": "vendors paid",
+            "metricRaw": "Vendors Paid",
+            "brand": "mawi",
+            "value": "0",
+            "valueNum": 0
+          },
+          {
+            "category": "events roi gy",
+            "metric": "vendors paid",
+            "metricRaw": "Vendors Paid",
+            "brand": "evolve",
+            "value": "5",
+            "valueNum": 5
+          },
+          {
+            "category": "events roi gy",
+            "metric": "avg feedback score",
+            "metricRaw": "Avg. Feedback Score (1-5)",
+            "brand": "group",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi gy",
+            "metric": "avg feedback score",
+            "metricRaw": "Avg. Feedback Score (1-5)",
+            "brand": "ramps",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi gy",
+            "metric": "avg feedback score",
+            "metricRaw": "Avg. Feedback Score (1-5)",
+            "brand": "edo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi gy",
+            "metric": "avg feedback score",
+            "metricRaw": "Avg. Feedback Score (1-5)",
+            "brand": "cubby cargo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi gy",
+            "metric": "avg feedback score",
+            "metricRaw": "Avg. Feedback Score (1-5)",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "events roi gy",
+            "metric": "avg feedback score",
+            "metricRaw": "Avg. Feedback Score (1-5)",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "videos released",
+            "metricRaw": "Videos Released",
+            "brand": "group",
+            "value": "3",
+            "valueNum": 3
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "videos released",
+            "metricRaw": "Videos Released",
+            "brand": "ramps",
+            "value": "1",
+            "valueNum": 1
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "videos released",
+            "metricRaw": "Videos Released",
+            "brand": "edo",
+            "value": "1",
+            "valueNum": 1
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "videos released",
+            "metricRaw": "Videos Released",
+            "brand": "cubby cargo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "videos released",
+            "metricRaw": "Videos Released",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "videos released",
+            "metricRaw": "Videos Released",
+            "brand": "evolve",
+            "value": "1",
+            "valueNum": 1
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "content internal use",
+            "metricRaw": "Content - Internal Use",
+            "brand": "group",
+            "value": "1",
+            "valueNum": 1
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "content internal use",
+            "metricRaw": "Content - Internal Use",
+            "brand": "ramps",
+            "value": "1",
+            "valueNum": 1
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "content internal use",
+            "metricRaw": "Content - Internal Use",
+            "brand": "edo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "content internal use",
+            "metricRaw": "Content - Internal Use",
+            "brand": "cubby cargo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "content internal use",
+            "metricRaw": "Content - Internal Use",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "content internal use",
+            "metricRaw": "Content - Internal Use",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "avg video watched",
+            "metricRaw": "Average % video watched",
+            "brand": "group",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "avg video watched",
+            "metricRaw": "Average % video watched",
+            "brand": "ramps",
+            "value": "7 sec",
+            "valueNum": 7
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "avg video watched",
+            "metricRaw": "Average % video watched",
+            "brand": "edo",
+            "value": "9 sec",
+            "valueNum": 9
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "avg video watched",
+            "metricRaw": "Average % video watched",
+            "brand": "cubby cargo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "avg video watched",
+            "metricRaw": "Average % video watched",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "avg video watched",
+            "metricRaw": "Average % video watched",
+            "brand": "evolve",
+            "value": "7 sec",
+            "valueNum": 7
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "shares",
+            "metricRaw": "Shares",
+            "brand": "group",
+            "value": "36",
+            "valueNum": 36
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "shares",
+            "metricRaw": "Shares",
+            "brand": "ramps",
+            "value": "18",
+            "valueNum": 18
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "shares",
+            "metricRaw": "Shares",
+            "brand": "edo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "shares",
+            "metricRaw": "Shares",
+            "brand": "cubby cargo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "shares",
+            "metricRaw": "Shares",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "shares",
+            "metricRaw": "Shares",
+            "brand": "evolve",
+            "value": "18",
+            "valueNum": 18
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "profit influenced",
+            "metricRaw": "Profit Influenced",
+            "brand": "group",
+            "value": "15500",
+            "valueNum": 15500
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "profit influenced",
+            "metricRaw": "Profit Influenced",
+            "brand": "ramps",
+            "value": "7000",
+            "valueNum": 7000
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "profit influenced",
+            "metricRaw": "Profit Influenced",
+            "brand": "edo",
+            "value": "3500",
+            "valueNum": 3500
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "profit influenced",
+            "metricRaw": "Profit Influenced",
+            "brand": "cubby cargo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "profit influenced",
+            "metricRaw": "Profit Influenced",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "profit influenced",
+            "metricRaw": "Profit Influenced",
+            "brand": "evolve",
+            "value": "5000",
+            "valueNum": 5000
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "turnaround time hrs",
+            "metricRaw": "Turnaround time (hrs) (time from event to post)",
+            "brand": "group",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "turnaround time hrs",
+            "metricRaw": "Turnaround time (hrs) (time from event to post)",
+            "brand": "ramps",
+            "value": "24",
+            "valueNum": 24
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "turnaround time hrs",
+            "metricRaw": "Turnaround time (hrs) (time from event to post)",
+            "brand": "edo",
+            "value": "24",
+            "valueNum": 24
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "turnaround time hrs",
+            "metricRaw": "Turnaround time (hrs) (time from event to post)",
+            "brand": "cubby cargo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "turnaround time hrs",
+            "metricRaw": "Turnaround time (hrs) (time from event to post)",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "turnaround time hrs",
+            "metricRaw": "Turnaround time (hrs) (time from event to post)",
+            "brand": "evolve",
+            "value": "24",
+            "valueNum": 24
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "content graphics submitted",
+            "metricRaw": "Content Graphics Submitted",
+            "brand": "group",
+            "value": "4",
+            "valueNum": 4
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "content graphics submitted",
+            "metricRaw": "Content Graphics Submitted",
+            "brand": "ramps",
+            "value": "4",
+            "valueNum": 4
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "content graphics submitted",
+            "metricRaw": "Content Graphics Submitted",
+            "brand": "edo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "content graphics submitted",
+            "metricRaw": "Content Graphics Submitted",
+            "brand": "cubby cargo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "content graphics submitted",
+            "metricRaw": "Content Graphics Submitted",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "content graphics submitted",
+            "metricRaw": "Content Graphics Submitted",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "projects graphics submitted",
+            "metricRaw": "Projects Graphics Submitted",
+            "brand": "group",
+            "value": "2",
+            "valueNum": 2
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "projects graphics submitted",
+            "metricRaw": "Projects Graphics Submitted",
+            "brand": "ramps",
+            "value": "1",
+            "valueNum": 1
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "projects graphics submitted",
+            "metricRaw": "Projects Graphics Submitted",
+            "brand": "edo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "projects graphics submitted",
+            "metricRaw": "Projects Graphics Submitted",
+            "brand": "cubby cargo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "projects graphics submitted",
+            "metricRaw": "Projects Graphics Submitted",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "projects graphics submitted",
+            "metricRaw": "Projects Graphics Submitted",
+            "brand": "evolve",
+            "value": "1",
+            "valueNum": 1
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "bd graphics submitted",
+            "metricRaw": "Business Development graphics submitted",
+            "brand": "group",
+            "value": "8",
+            "valueNum": 8
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "bd graphics submitted",
+            "metricRaw": "Business Development graphics submitted",
+            "brand": "ramps",
+            "value": "8",
+            "valueNum": 8
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "bd graphics submitted",
+            "metricRaw": "Business Development graphics submitted",
+            "brand": "edo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "bd graphics submitted",
+            "metricRaw": "Business Development graphics submitted",
+            "brand": "cubby cargo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "bd graphics submitted",
+            "metricRaw": "Business Development graphics submitted",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "bd graphics submitted",
+            "metricRaw": "Business Development graphics submitted",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "revenue influenced",
+            "metricRaw": "Revenue Influenced",
+            "brand": "group",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "revenue influenced",
+            "metricRaw": "Revenue Influenced",
+            "brand": "ramps",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "revenue influenced",
+            "metricRaw": "Revenue Influenced",
+            "brand": "edo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "revenue influenced",
+            "metricRaw": "Revenue Influenced",
+            "brand": "cubby cargo",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "revenue influenced",
+            "metricRaw": "Revenue Influenced",
+            "brand": "mawi",
+            "value": null,
+            "valueNum": null
+          },
+          {
+            "category": "creative and visual media",
+            "metric": "revenue influenced",
+            "metricRaw": "Revenue Influenced",
+            "brand": "evolve",
+            "value": null,
+            "valueNum": null
+          }
+        ],
+        "notes": [
+          {
+            "category": "pipeline impact",
+            "brand": "group",
+            "text": "Ad spend went over limit due to additional PR Ad for Yahoo article"
+          },
+          {
+            "category": "pipeline impact",
+            "brand": "ramps",
+            "text": "OTC Campaign Continued and TTSPCA CSR Campaign. Leads are represented by link clicks. \r\nNote: this period’s Ramps conversion rate is unusually high because link clicks are much higher than visits in the platform data."
+          },
+          {
+            "category": "pipeline impact",
+            "brand": "edo",
+            "text": "EDO 10 Year campaign launched this period. Leads are represented by link clicks. CPC and CPL are based on current ad spend and clicks to date."
+          },
+          {
+            "category": "pipeline impact",
+            "brand": "cubby cargo",
+            "text": "New LCL campaign continued. Leads are represented by link clicks, 28 new number leads on Cubby whatsapp, and conversion rate was calculated as total link clicks divided by total platform visits. CPC and CPL are based on current ad spend and clicks to date."
+          },
+          {
+            "category": "market growth and visibility",
+            "brand": "group",
+            "text": "Ramps Media included Businesswire US Circuit feature. Notably: Yahoo and AJOT features"
+          },
+          {
+            "category": "market growth and visibility",
+            "brand": "ramps",
+            "text": "Speaking Eng: Dale Discussion\r\n\r\nThought Leadership Pub: Beyond OTC Feature (Guardian Media)"
+          },
+          {
+            "category": "market growth and visibility",
+            "brand": "edo",
+            "text": "Speaking Eng: GY Women In Maritime Gala; Sonia Noel 30th Anni"
+          },
+          {
+            "category": "reputation and risk",
+            "brand": "ramps",
+            "text": "22 Pos\r\nExe Panel: Shaun London Panel"
+          },
+          {
+            "category": "reputation and risk",
+            "brand": "edo",
+            "text": "11 Pos"
+          },
+          {
+            "category": "events roi tt",
+            "brand": "group",
+            "text": "Micro Internal Engagements Executed within this period, as well as planning/prep for major activations in-progress"
+          },
+          {
+            "category": "events roi tt",
+            "brand": "ramps",
+            "text": "Completed: Mental Health Awareness Month TTSPCA Feature, Ramps at EC Energy Lime\r\nOngoing: Ramps Football Tournament (EXPRO)"
+          },
+          {
+            "category": "events roi tt",
+            "brand": "edo",
+            "text": "Ongoing: EDO/Valaris Curry Duck Planning"
+          },
+          {
+            "category": "events roi tt",
+            "brand": "cubby cargo",
+            "text": "Ongoing: TIC2026 Pre-Planning"
+          },
+          {
+            "category": "events roi tt",
+            "brand": "evolve",
+            "text": "Ongoing: EVolve at CL Final Viewing"
+          },
+          {
+            "category": "events roi gy",
+            "brand": "group",
+            "text": "Micro Internal Engagements Executed within this period"
+          },
+          {
+            "category": "events roi gy",
+            "brand": "ramps",
+            "text": "Completed:Mental Health Awareness Month Engagement (Head & Neck Massage in office),Ongoing:Independence Potluck"
+          },
+          {
+            "category": "events roi gy",
+            "brand": "evolve",
+            "text": "Completed: Evolve Pop up event @ Giftland Parking Lot"
+          },
+          {
+            "category": "creative and visual media",
+            "brand": "group",
+            "text": "ECCLES Guyana HSSE safety signs \r\n\r\nProSource Guyana construction company Logo variations"
+          },
+          {
+            "category": "creative and visual media",
+            "brand": "ramps",
+            "text": "SEOGS booth options 8 walls (8ft wide) \r\nConcept and breakdown of Ramps and EDO branding for each wall display"
+          },
+          {
+            "category": "creative and visual media",
+            "brand": "evolve",
+            "text": "EVOLVE “Score to win” engagement design for world cup initiatives 7ft by 6 ft football game cut out"
+          },
+          {
+            "category": "creative and visual media",
+            "brand": "ramps",
+            "text": "Atlantic Driving Safety Video\r\nPeriod Poverty Video \r\nHand International Album\r\nEnergy Chamber Cricket & Curry Duck Album"
+          },
+          {
+            "category": "creative and visual media",
+            "brand": "edo",
+            "text": "EDO 10 Anniversary Campaign Video"
+          },
+          {
+            "category": "creative and visual media",
+            "brand": "evolve",
+            "text": "Evolve Champions League Final Viewing Event"
+          }
+        ],
+        "warnings": [],
+        "unknownMetrics": [],
+        "dupMetrics": []
+      },
+      "meta": {
+        "filename": "Communications_Fortnightly_Report (7).xlsx",
+        "uploadTime": "02 Jul 2026, 04:42 pm",
+        "metrics": 306,
+        "numerics": 168,
+        "narratives": 23,
+        "unknownMetrics": [],
+        "dupMetrics": []
+      }
+    }
+  }
+}
