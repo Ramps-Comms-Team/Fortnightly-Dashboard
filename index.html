@@ -1040,8 +1040,7 @@ async function runTokenDiagnostic(){
   lines.push('4. Permissions > Repository permissions > Contents: Read and write');
   lines.push('5. After creating, click "Configure SSO" on the token page and');
   lines.push('   authorise for Ramps-Comms-Team');
-  outEl.textContent=lines.join('
-');
+  outEl.textContent=lines.join('\n');
 }
 
 function enableAdminMode(){
